@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'f!2)y#d4sul(cgn2p+x9i4kvm6h8$!8!t*yc^0dsmriyobg@2m'
+SECRET_KEY = 'f!2)y#d4sul(cgn2p+x9i4kvm6h8$!8!t*yc^0dsmriyobg@2m' #TODO
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True #TODO
@@ -54,7 +54,7 @@ ROOT_URLCONF = 'chausant.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -121,3 +121,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Redirect to home URL after login (Default redirects to /accounts/profile/)
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

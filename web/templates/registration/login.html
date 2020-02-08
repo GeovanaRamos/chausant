@@ -1,0 +1,33 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+  {% if form.errors %}
+    <p>Senha e/ou usuário incorretos. Tente novamente.</p>
+  {% endif %}
+  
+  {% if next %}
+    {% if user.is_authenticated %}
+      <p>Você não tem permissão para acessar essa página.</p>
+    {% else %}
+      <p>Faça login para acessar a página.</p>
+    {% endif %}
+  {% endif %}
+  
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <table>
+      <tr>
+        <td>Usuário</td>
+        <td>{{ form.username }}</td>
+      </tr>
+      <tr>
+        <td>Senha</td>
+        <td>{{ form.password }}</td>
+      </tr>
+    </table>
+    <input type="submit" value="Entrar" />
+    <input type="hidden" name="next" value="{{ next }}" />
+  </form>
+  
+{% endblock %}
