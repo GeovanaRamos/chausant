@@ -1,19 +1,20 @@
 from django.db import models
 
-class Questionnarie(models.Model):
+class Questionnaire(models.Model):
 
+	title = models.CharField(max_length=50, help_text='Digite o título do questionário.')
 	password = models.CharField(max_length=20, help_text='Insira a senha do questionário.')
 
 	class Meta:
-		verbose_name = 'Questionnarie'
+		verbose_name = 'Questionnaire'
 
 	def __str__(self):
-		return self.name
+		return self.title
 
 class Quiz(models.Model):
 
 	question = models.CharField(max_length=500, help_text='Digite o texto da pergunta.')
-	questionnarie = models.ManyToManyField(Questionnarie)
+	questionnaire = models.ManyToManyField(Questionnaire)
 	
 	class Meta:
 		verbose_name = 'Quiz'

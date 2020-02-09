@@ -1,0 +1,27 @@
+<h1>Questionnaires</h1>
+
+<table>
+  
+  <thead>
+    <tr>
+    <th>Name</th>
+    <th>Password</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for questionnaire in object_list %}
+      <tr>
+        <td>{{ questionnaire.title }}</td>
+        <td>{{ questionnaire.password }}</td>
+        <td>
+          <a  href="{% url "questionnaire_detail"  questionnaire.id  %}">Detalhes</a>
+          <a  href="{% url "questionnaire_update"  questionnaire.id  %}">Editar</a>
+          <a  href="{% url "questionnaire_delete"  questionnaire.id  %}">Deletar</a>
+        </td>
+      </tr>
+
+    {% endfor %}
+  </tbody>
+
+</table>
