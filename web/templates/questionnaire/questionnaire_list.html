@@ -10,6 +10,7 @@
   </thead>
 
   <tbody>
+    <a href="{% url 'questionnaire_create' %}">Nova Lista de Exercícios</a>
     {% for questionnaire in object_list %}
       <tr>
         <td>{{ questionnaire.title }}</td>

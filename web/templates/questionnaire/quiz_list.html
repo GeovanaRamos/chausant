@@ -1,0 +1,23 @@
+<h1>Questões</h1>
+
+<table>
+  
+  <thead>
+    <tr>
+    <th>Pergunta</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for quiz in object_list %}
+      <tr>
+        <td>{{ quiz.question }}</td>
+        <td>
+          editar
+        </td>
+      </tr>
+
+    {% endfor %}
+  </tbody>
+
+</table>

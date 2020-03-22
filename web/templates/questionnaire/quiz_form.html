@@ -1,0 +1,14 @@
+<form method="POST" >
+  {% csrf_token %}
+    <h2>Questão</h2>
+    {{ form }}
+    <h2>Alternativas</h2>
+    {{ formset.management_form }}
+    {% with inlines as formset %}
+      {{ formset }}
+    {% endwith %}
+  <input type="submit" class="btn btn-primary" value="Salvar">
+</form>
+
+
+

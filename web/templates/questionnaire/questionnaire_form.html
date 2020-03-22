@@ -1,5 +1,11 @@
-<form action="/your-name/" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
+<form method="post">
+  {% csrf_token %}
+  {{ form }}
+  <input type="submit" value="Submit">
 </form>
+
+<a> Criar Nova Questão</a>
+<button href="{% url 'quiz_create' %}" type="button" class="btn btn-primary" data-toggle="modal"
+  data-target="#exampleModal">
+  Criar Nova Questão
+</button>
