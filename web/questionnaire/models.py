@@ -14,7 +14,7 @@ class Questionnaire(models.Model):
 class Quiz(models.Model):
 
 	question = models.CharField(max_length=500, help_text='Digite o texto da pergunta.')
-	questionnaire = models.ManyToManyField(Questionnaire)
+	questionnaire = models.ManyToManyField(Questionnaire, blank=True)
 	
 	class Meta:
 		verbose_name = 'Quiz'
@@ -26,6 +26,8 @@ class Alternative(models.Model):
 
 	text = models.CharField(max_length=20, help_text='Digite o texto da alternativa.')
 	is_answer = models.BooleanField(default=False)
+	quiz_id = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+	letter = models.CharField(max_length=1)
 
 	class Meta:
 		verbose_name = 'Alternative'
