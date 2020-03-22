@@ -1,6 +1,7 @@
 from django.views.generic import ListView, DetailView 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Questionnaire, Quiz, Alternative
+from .forms import QuestionnaireForm
 
 class QuestionnaireList(ListView):
 	model = Questionnaire 
@@ -16,6 +17,7 @@ class QuestionnaireDetail(DetailView):
 
 class QuestionnaireCreate(CreateView):
 	model = Questionnaire
+	form_class = QuestionnaireForm
 
 # class QuizList(ListView):
 # 	model = Quiz 
