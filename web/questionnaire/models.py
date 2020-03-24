@@ -24,7 +24,7 @@ class School(models.Model):
 		return self.name
 		
 
-class Teacher(User):
+class Teacher(models.Model):
 
 	DISCIPLINES = (
 		(1, "Matemática"),
@@ -35,6 +35,7 @@ class Teacher(User):
 
 	school = models.ManyToManyField(School)
 	discipline = models.CharField(max_length=50, choices=DISCIPLINES)
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 	class Meta:
 		verbose_name = "Professor"
@@ -59,9 +60,10 @@ class SchoolClass(models.Model):
 		return self.name
 
 
-class Student(User):
+class Student(models.Model):
 
 	school_class = models.ManyToManyField(SchoolClass, blank=True)
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 	class Meta:
 		verbose_name = "Estudante"
