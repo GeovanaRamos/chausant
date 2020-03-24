@@ -2,7 +2,7 @@ from django.urls import reverse_lazy
 from django.db import transaction
 from django.views.generic import ListView, DetailView 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Questionnaire, Quiz, Alternative, SchoolClass
+from .models import Questionnaire, Quiz, Alternative, SchoolClass, Student
 from .forms import QuestionnaireForm, QuizInlineFormSet
 
 class QuestionnaireList(ListView):
@@ -45,3 +45,17 @@ class SchoolClassCreate(CreateView):
 
 class SchoolClassList(ListView):
     model = SchoolClass
+
+class PendingStudentsList(ListView):
+    model = Student
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        teacher = self.request.user.teacher
+        school_class = SchoolClass.objects.filter(teacher=teacher)
+        
+        context["students"] =  Student.objects.filter(school_class__in=school_class)
+        
+        return context
+    
