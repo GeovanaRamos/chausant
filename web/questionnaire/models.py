@@ -34,7 +34,7 @@ class Teacher(models.Model):
 	)
 
 	school = models.ManyToManyField(School)
-	discipline = models.CharField(max_length=50, choices=DISCIPLINES)
+	discipline = models.IntegerField(choices=DISCIPLINES)
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 	class Meta:
