@@ -1,4 +1,7 @@
-<h1>Questionnaires</h1>
+<h1>Listas de Exercícios</h1>
+
+<a href="{% url 'questionnaire_create' %}">Nova Lista de Exercícios</a>
+<a href="{% url 'quiz_list' %}">Base de Questões</a>
 
 <table>
   
@@ -10,7 +13,6 @@
   </thead>
 
   <tbody>
-    <a href="{% url 'questionnaire_create' %}">Nova Lista de Exercícios</a>
     {% for questionnaire in object_list %}
       <tr>
         <td>{{ questionnaire.title }}</td>
