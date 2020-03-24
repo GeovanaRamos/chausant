@@ -2,20 +2,11 @@ from django.urls import reverse_lazy
 from django.db import transaction
 from django.views.generic import ListView, DetailView 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Questionnaire, Quiz, Alternative
+from .models import Questionnaire, Quiz, Alternative, SchoolClass
 from .forms import QuestionnaireForm, QuizInlineFormSet
 
 class QuestionnaireList(ListView):
     model = Questionnaire 
-
-# class QuestionnaireUpdate(UpdateView):
-# 	model = Questionnaire 
-
-# class QuestionnaireDelete(DeleteView):
-# 	model = Questionnaire
-
-# class QuestionnaireDetail(DetailView):
-# 	model = Questionnaire
 
 class QuestionnaireCreate(CreateView):
     model = Questionnaire
@@ -48,17 +39,9 @@ class QuizCreate(CreateView):
 class QuizList(ListView):
 	model = Quiz 
 
-# class QuizUpdate(UpdateView):
-# 	model = Quiz 
+class SchoolClassCreate(CreateView):
+    model = SchoolClass
+    fields = '__all__'
 
-# class QuizDelete(DeleteView):
-# 	model = Quiz
-
-# class AlternativeList(ListView):
-# 	model = Alternative 
-
-# class AlternativeUpdate(UpdateView):
-# 	model = Alternative 
-
-# class AlternativeDelete(DeleteView):
-# 	model = Alternative
+class SchoolClassList(ListView):
+    model = SchoolClass

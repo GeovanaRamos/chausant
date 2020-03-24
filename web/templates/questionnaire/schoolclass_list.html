@@ -1,0 +1,22 @@
+<h1>Turmas</h1>
+
+<a href="{% url 'schoolclass_create'%}">Criar turma</a>
+
+<table>
+
+	<thead>
+		<tr>
+			<th>Nome</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		{% for schoolclass in object_list %}
+		<tr>
+			<td>{{ schoolclass.name }}</td>
+		</tr>
+
+		{% endfor %}
+	</tbody>
+
+</table>
