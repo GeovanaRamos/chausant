@@ -46,7 +46,7 @@ class SchoolClassCreate(CreateView):
 class SchoolClassList(ListView):
     model = SchoolClass
 
-class PendingStudentsList(ListView):
+class StudentsList(ListView):
     model = Student
 
     def get_context_data(self, **kwargs):

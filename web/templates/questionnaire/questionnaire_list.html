@@ -1,8 +1,10 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
 <h1>Listas de Exercícios</h1>
 
-<a href="{% url 'questionnaire_create' %}">Nova Lista de Exercícios</a>
-<a href="{% url 'quiz_list' %}">Base de Questões</a>
-<a href="{% url 'schoolclass_list' %}">Turmas</a>
+<a class="btn btn-primary" href="{% url 'questionnaire_create' %}">Nova Lista de Exercícios</a>
 
 <table>
   
@@ -29,3 +31,4 @@
   </tbody>
 
 </table>
+{% endblock content %}
