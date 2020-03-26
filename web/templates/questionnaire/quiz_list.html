@@ -1,3 +1,7 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
 <h1>Questões</h1>
 <a href="{% url 'quiz_create' %}">Nova Questão</a>
 
@@ -22,3 +26,5 @@
   </tbody>
 
 </table>
+
+{% endblock %}

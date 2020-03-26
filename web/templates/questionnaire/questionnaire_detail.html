@@ -1,6 +1,11 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
 <h1>Questionnaire Details</h1>
 
 <p>Name: {{object.name}}</p>
 <p>Email: {{object.email}}</p>
 <p>Address: {{object.address}}</p>
 <p>Phone: {{object.phone}}</p>
+{% endblock %}

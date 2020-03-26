@@ -1,3 +1,7 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
 <h1>Turmas</h1>
 
 <a href="{% url 'schoolclass_create'%}">Criar turma</a>
@@ -20,3 +24,4 @@
 	</tbody>
 
 </table>
+{% endblock %}

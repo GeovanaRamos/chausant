@@ -1,3 +1,7 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
 <form method="POST" >
   {% csrf_token %}
     <h2>Questão</h2>
@@ -9,6 +13,7 @@
     {% endwith %}
   <input type="submit" class="btn btn-primary" value="Salvar">
 </form>
+{% endblock %}
 
 
 

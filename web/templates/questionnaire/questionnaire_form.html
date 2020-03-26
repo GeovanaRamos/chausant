@@ -1,3 +1,7 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
 <form method="post">
   {% csrf_token %}
   {{ form }}
@@ -9,3 +13,4 @@
   data-target="#exampleModal">
   Criar Nova Questão
 </button>
+{% endblock %}
