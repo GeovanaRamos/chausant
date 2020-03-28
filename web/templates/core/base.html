@@ -20,28 +20,31 @@
 <body>
 
   <div class="wrapper d-flex align-items-stretch">
-    <nav id="sidebar" class="active">
-      <h1><img class="my-4" src="{% static 'core/img/logo.png' %}" width="50"></h1>
-      <ul class="list-unstyled components mb-5">
-        <li class="active">
-          <a href="{% url 'questionnaire_list' %}"><span class="fa fa-home"></span>Perfil</a>
-        </li>
-        <li class="active">
-          <a href="{% url 'questionnaire_list' %}"><span class="fas fa-list-ol"></span>Listas</a>
-        </li>
-        <li>
-          <a href="{% url 'quiz_list' %}"><span class="fas fa-question-circle"></span>Questões</a>
-        </li>
-        <li>
-          <a href="{% url 'schoolclass_list' %}"><span class="fas fa-chalkboard-teacher"></span>Turmas</a>
-        </li>
-        <li>
-          <a href="{% url 'student_list' %}"><span class="fas fa-user-graduate"></span> Alunos</a>
-        </li>
-      </ul>
-
-      <div class="footer">
-        <a href="{% url 'logout' %}"><span class="fas fa-sign-out-alt ml-2"></span>Sair</a>
+    <nav id="sidebar">
+      <div id="logo">
+        <img class="my-4" src="{% static 'core/img/logo.png' %}" width="50">
+      </div>
+      <div id="menu">
+        <ul class="list-unstyled components mb-5">
+          <li>
+            <a href="{% url 'questionnaire_list' %}"><span class="fa fa-home"></span>Perfil</a>
+          </li>
+          <li>
+            <a href="{% url 'questionnaire_list' %}"><span class="fas fa-list-ol"></span>Listas</a>
+          </li>
+          <li>
+            <a href="{% url 'quiz_list' %}"><span class="fas fa-question-circle"></span>Questões</a>
+          </li>
+          <li>
+            <a href="{% url 'schoolclass_list' %}"><span class="fas fa-chalkboard-teacher"></span>Turmas</a>
+          </li>
+          <li>
+            <a href="{% url 'student_list' %}"><span class="fas fa-user-graduate"></span> Alunos</a>
+          </li>
+        </ul>
+      </div>
+      <div id="footer">
+          <a href="{% url 'logout' %}"><span class="fas fa-sign-out-alt ml-1"></span>Sair</a>
       </div>
 
     </nav>

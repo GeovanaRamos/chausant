@@ -1,5 +1,6 @@
 :root {
 	--primary: #054E3B;
+	--secondary: #343a40;
 }
 
 .wrapper {
@@ -7,55 +8,43 @@
 }
 
 #sidebar {
-	min-width: 270px;
-	max-width: 270px;
-	background: var(--primary);
-	color: #fff;
+	background: var(--secondary);
 	-webkit-transition: all 0.3s;
 	-o-transition: all 0.3s;
 	transition: all 0.3s;
-}
-
-#sidebar.active {
 	min-width: 80px;
 	max-width: 80px;
 	text-align: center;
 }
 
-#sidebar.active ul.components li {
+#menu {
+	height: 70%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#sidebar #logo {
+	background-color: var(--primary);
+}
+
+#sidebar a,
+#sidebar span {
+	color: white
+}
+
+#sidebar ul.components li {
 	font-size: 14px;
 }
 
-#sidebar.active ul.components li a {
+#sidebar ul.components li a {
 	padding: 10px 0;
 }
 
-#sidebar.active ul.components li a span {
+#sidebar ul.components li a span {
 	margin-right: 0;
 	display: block;
-	font-size: 24px;
-}
-
-#sidebar.active .logo {
-	padding: 10px 0;
-}
-
-#sidebar .logo {
-	display: block;
-	color: #fff;
-	font-weight: 900;
-	padding: 10px 30px;
-	-webkit-transition: 0.3s;
-	-o-transition: 0.3s;
-	transition: 0.3s;
-}
-
-
-#sidebar ul.components {
-	padding: 0;
-	-webkit-transition: 0.3s;
-	-o-transition: 0.3s;
-	transition: 0.3s;
+	font-size: 18px;
 }
 
 #sidebar ul li {
@@ -73,7 +62,6 @@
 #sidebar ul li a {
 	padding: 10px 30px;
 	display: block;
-	color: white;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 	text-decoration: none;
 }
@@ -82,17 +70,8 @@
 	margin-right: 15px;
 }
 
-#sidebar ul li a:hover {
-	color: #fff;
-}
-
-#sidebar ul li.active>a {
-	background: transparent;
-	color: #fff;
-}
-
-.footer {
-	padding: 0 30px;
+#sidebar #footer {
+	padding: 0 20px;
 	height: 50px;
 	position: absolute;
 	width: 80px;
@@ -100,8 +79,7 @@
 	list-style-type: none;
 }
 
-.footer a{
-	color: white;
+#sidebar #footer a {
 	text-decoration: none;
 }
 
@@ -114,3 +92,7 @@
 	transition: all 0.3s;
 }
 
+.btn-primary {
+	background-color: var(--primary);
+	border-color: var(--primary);
+}
