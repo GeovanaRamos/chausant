@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
 	full_name = models.CharField(max_length=70)
+	is_validated = models.BooleanField(default=False)
 
 	class Meta:
 		verbose_name = "Usuário"
@@ -11,30 +12,8 @@ class User(AbstractUser):
 	def __str__(self):
 		return self.full_name
 
-
-class School(models.Model):
-
-	name = models.CharField(max_length=50)
-
-	class Meta:
-		verbose_name = "Escola"
-		verbose_name_plural = "Escolas"
-
-	def __str__(self):
-		return self.name
-		
-
 class Teacher(models.Model):
 
-	DISCIPLINES = (
-		(1, "Matemática"),
-		(2, "Física"),
-		(3, "Química"),
-		(4, "Biologia")
-	)
-
-	school = models.ManyToManyField(School)
-	discipline = models.IntegerField(choices=DISCIPLINES)
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 	class Meta:
@@ -44,20 +23,42 @@ class Teacher(models.Model):
 	def __str__(self):
 		return self.full_name
 
+class Discipline(models.Model):
+	name = models.CharField(max_length=50)
+
+	class Meta:
+		verbose_name = "Disciplina"
+		verbose_name_plural = "Disciplina"
+
+	def __str__(self):
+		return self.name
+
+class SchoolLevel(models.Model):
+	number = models.IntegerField()
+	level = models.CharField(max_length=20)
+
+	class Meta:
+		verbose_name = "Série Escolar"
+		verbose_name_plural = "Séries Escolares"
+
+	def __str__(self):
+		return str(self.number) + '°' + ' ano ' + self.level
 
 class SchoolClass(models.Model):
-	
-	name = models.CharField(max_length=50)
+
+	school_level = models.ForeignKey(SchoolLevel, on_delete=models.CASCADE)
 	year = models.IntegerField()
+	letter = models.CharField(max_length=1, blank=True)
 	teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-	school = models.ForeignKey(School, on_delete=models.CASCADE)
+	discipline = models.ForeignKey(Discipline, on_delete=models.CASCADE)
 
 	class Meta:
 		verbose_name = "Turma"
 		verbose_name_plural = "Turmas"
 
 	def __str__(self):
-		return self.name
+		school_class =  "Turma " + self.letter + '/' + str(self.year) + '-' + str(self.discipline)
+		return  str(self.school_level) + school_class
 
 
 class Student(models.Model):
@@ -76,7 +77,6 @@ class Student(models.Model):
 class Questionnaire(models.Model):
 
 	title = models.CharField(max_length=50)
-	teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
 	school_class = models.ManyToManyField(SchoolClass)
 	start_date = models.DateTimeField( auto_now=False, auto_now_add=False)
 	due_date = models.DateTimeField( auto_now=False, auto_now_add=False)
