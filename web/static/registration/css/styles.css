@@ -1,15 +1,16 @@
 body {
-	padding-top: 4.2rem;
-	padding-bottom: 4.2rem;
-	background: #054E3B;
+	background: var(--secondary);
 }
 
 a {
 	text-decoration: none !important;
 }
 
-h1, h2, h3 {
-	font-family: 'Alegreya SC';
+#logo h1 {
+	margin: 0 !important;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	color: white;
 }
 
 .myform {
@@ -24,10 +25,9 @@ h1, h2, h3 {
 	background-color: #fff;
 	background-clip: padding-box;
 	border: 1px solid rgba(0, 0, 0, .2);
-	border-radius: 1.1rem;
+	border-radius: 0 0 1.1rem 1.1rem;
 	outline: 0;
 	max-width: 500px;
-	margin-top: 50px;
 }
 
 .tx-tfm {
@@ -38,4 +38,15 @@ h1, h2, h3 {
 	border-radius: 50px;
 }
 
+.vertical-center {
+	min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+	min-height: 100vh; /* These two lines are counted as one :-)       */
+  
+	display: flex;
+	align-items: center;
+}
+
+.center {
+	margin-left: 28%;
+}
 

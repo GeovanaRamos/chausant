@@ -1,57 +1,70 @@
-{% extends "core/base.html" %}
 {% load static %}
 
-{% block css %}
-  <link href="{% static 'registration/css/styles.css' %}" rel="stylesheet">
-{% endblock %}
+<!doctype html>
+<html lang="pt">
 
-{% block content %}
+<head>
+  <title>Chausant</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
+  <link href="{% static 'core/css/styles.css' %}" rel="stylesheet">
+  <link href="{% static 'registration/css/styles.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
 
   <div class="container">
-      <div class="row">
-        <div class="col-md-5 mx-auto">
-          <div id="first">
-            <div class="myform form ">
-              
-              <div class="logo mb-3">
-                <div class="col-md-12 text-center">
-                  <h1>Chausant</h1>
-                </div>
+    <div class="vertical-center">
+      <div class="col-md-5 mx-auto mt5">
+        <div id="first">
+          <div id="logo">
+            <div class="center">
+              <img class="float-left mt-3" src="{% static 'core/img/logo.png' %}" width="50"><h1>hausant</h1>
+            </div>
+          </div>
+
+          <div class="myform form ">
+            {% if next %}
+            {% if user.is_authenticated %}
+            <p>Você não tem permissão para acessar essa página.</p>
+            {% else %}
+            <p>Faça login para acessar a página.</p>
+            {% endif %}
+            {% endif %}
+
+            <form method="post" action="{% url 'login' %}">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="exampleInputEmail1">Usuário</label>
+                <input type="text" name="username" autofocus="" required="" id="id_username" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Senha</label>
+                <input type="password" name="password" required="" id="id_password" class="form-control">
               </div>
 
-              {% if next %}
-                {% if user.is_authenticated %}
-                  <p>Você não tem permissão para acessar essa página.</p>
-                {% else %}
-                  <p>Faça login para acessar a página.</p>
-                {% endif %}
+              {% if form.errors %}
+              <p>Senha e/ou usuário incorretos. Tente novamente.</p>
               {% endif %}
-              
-              <form method="post" action="{% url 'login' %}">
-                {% csrf_token %}
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Usuário</label>
-                  <input type="text" name="username" autofocus="" required="" id="id_username" class="form-control">
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Senha</label>
-                  <input type="password" name="password" required="" id="id_password" class="form-control">
-                </div>
 
-                {% if form.errors %}
-                  <p>Senha e/ou usuário incorretos. Tente novamente.</p>
-                {% endif %}
-                
-                <div class="col-md-12 text-center ">
-                  <input type="hidden" name="next" value="{{ next }}" />
-                  <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Login</button>
-                </div>
-                
-              </form>     
-            </div>
+              <div class="col-md-12 text-center ">
+                <input type="hidden" name="next" value="{{ next }}" />
+                <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Login</button>
+              </div>
+
+            </form>
           </div>
         </div>
       </div>
-    </div>   
-  </div>    
-{% endblock %}
+    </div>
+  </div>
+
+</body>
+
+
+</html>
