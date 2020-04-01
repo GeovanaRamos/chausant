@@ -96,3 +96,7 @@
 	background-color: var(--primary);
 	border-color: var(--primary);
 }
+
+.form-container {
+	max-width: 60%;
+}
