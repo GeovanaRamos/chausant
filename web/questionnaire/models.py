@@ -63,7 +63,7 @@ class SchoolClass(models.Model):
 
 class Student(models.Model):
 
-	school_class = models.ManyToManyField(SchoolClass, blank=True)
+	school_classes = models.ManyToManyField(SchoolClass, blank=True)
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 	class Meta:
@@ -73,32 +73,30 @@ class Student(models.Model):
 	def __str__(self):
 		return self.full_name
 
-
-class Questionnaire(models.Model):
-
-	title = models.CharField(max_length=50)
-	school_class = models.ManyToManyField(SchoolClass)
-	start_date = models.DateTimeField( auto_now=False, auto_now_add=False)
-	due_date = models.DateTimeField( auto_now=False, auto_now_add=False)
-	is_suspended = models.BooleanField(default=False)
-
-	class Meta:
-		verbose_name = "Lista de Exercícios"
-		verbose_name_plural = "Listas de Exercícios"
-
-	def __str__(self):
-		return self.title
-
-
 class Quiz(models.Model):
 
 	title = models.CharField(max_length=50)
 	question = models.TextField()
-	questionnaire = models.ManyToManyField(Questionnaire, blank=True)
 	
 	class Meta:
 		verbose_name = "Questão"
 		verbose_name_plural = "Questões"
+
+	def __str__(self):
+		return self.title
+
+class Questionnaire(models.Model):
+
+	title = models.CharField(max_length=50)
+	school_classes = models.ManyToManyField(SchoolClass)
+	start_date = models.DateTimeField( auto_now=False, auto_now_add=False)
+	due_date = models.DateTimeField( auto_now=False, auto_now_add=False)
+	is_suspended = models.BooleanField(default=False)
+	quizzes = models.ManyToManyField(Quiz, blank=True)
+
+	class Meta:
+		verbose_name = "Lista de Exercícios"
+		verbose_name_plural = "Listas de Exercícios"
 
 	def __str__(self):
 		return self.title
