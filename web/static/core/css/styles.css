@@ -9,12 +9,11 @@
 
 #sidebar {
 	background: var(--secondary);
-	-webkit-transition: all 0.3s;
-	-o-transition: all 0.3s;
-	transition: all 0.3s;
 	min-width: 80px;
 	max-width: 80px;
 	text-align: center;
+	position: fixed;
+	height: 100%;
 }
 
 #menu {
@@ -90,6 +89,7 @@
 	-webkit-transition: all 0.3s;
 	-o-transition: all 0.3s;
 	transition: all 0.3s;
+	margin-left: 80px;
 }
 
 .btn-primary {
