@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
-	full_name = models.CharField(max_length=70)
+	full_name = models.CharField(verbose_name="Nome Completo", max_length=70)
 	is_validated = models.BooleanField(default=False)
 
 	class Meta:
@@ -24,7 +24,7 @@ class Teacher(models.Model):
 		return self.full_name
 
 class Discipline(models.Model):
-	name = models.CharField(max_length=50)
+	name = models.CharField(verbose_name="Nome", max_length=50)
 
 	class Meta:
 		verbose_name = "Disciplina"
@@ -46,11 +46,11 @@ class SchoolLevel(models.Model):
 
 class SchoolClass(models.Model):
 
-	school_level = models.ForeignKey(SchoolLevel, on_delete=models.CASCADE)
-	year = models.IntegerField()
-	letter = models.CharField(max_length=1, blank=True)
-	teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-	discipline = models.ForeignKey(Discipline, on_delete=models.CASCADE)
+	school_level = models.ForeignKey(verbose_name="Nível Escolar",to=SchoolLevel, on_delete=models.CASCADE)
+	year = models.IntegerField(verbose_name="Ano de Realização")
+	letter = models.CharField(verbose_name="Letra", max_length=1, blank=True)
+	teacher = models.ForeignKey(verbose_name="Professor", to=Teacher, on_delete=models.CASCADE)
+	discipline = models.ForeignKey(verbose_name="Disciplina", to=Discipline, on_delete=models.CASCADE)
 
 	class Meta:
 		verbose_name = "Turma"
@@ -75,8 +75,8 @@ class Student(models.Model):
 
 class Quiz(models.Model):
 
-	title = models.CharField(max_length=50)
-	question = models.TextField()
+	title = models.CharField(verbose_name="Título", max_length=50)
+	question = models.TextField(verbose_name="Pergunta")
 	
 	class Meta:
 		verbose_name = "Questão"
@@ -87,12 +87,12 @@ class Quiz(models.Model):
 
 class Questionnaire(models.Model):
 
-	title = models.CharField(max_length=50)
-	school_classes = models.ManyToManyField(SchoolClass)
-	start_date = models.DateTimeField( auto_now=False, auto_now_add=False)
-	due_date = models.DateTimeField( auto_now=False, auto_now_add=False)
+	title = models.CharField(verbose_name="Título", max_length=50)
+	school_classes = models.ManyToManyField(verbose_name="Turmas", to=SchoolClass)
+	start_date = models.DateTimeField(verbose_name="Início",auto_now=False, auto_now_add=False)
+	due_date = models.DateTimeField(verbose_name="Término", auto_now=False, auto_now_add=False)
 	is_suspended = models.BooleanField(default=False)
-	quizzes = models.ManyToManyField(Quiz, blank=True)
+	quizzes = models.ManyToManyField(verbose_name="Questões", to=Quiz, blank=True)
 
 	class Meta:
 		verbose_name = "Lista de Exercícios"
@@ -103,9 +103,9 @@ class Questionnaire(models.Model):
 
 class Alternative(models.Model):
 
-	text = models.CharField(max_length=20, help_text="Digite o texto da alternativa.")
-	is_answer = models.BooleanField(default=False)
-	quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+	text = models.CharField(verbose_name="Texto",max_length=20)
+	is_answer = models.BooleanField(verbose_name="É a correta?" ,default=False)
+	quiz = models.ForeignKey(verbose_name="Perguntas",to=Quiz, on_delete=models.CASCADE)
 	letter = models.CharField(max_length=1)
 
 	class Meta:
