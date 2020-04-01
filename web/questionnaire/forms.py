@@ -6,15 +6,16 @@ class QuestionnaireForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
     class Meta:
         model = Questionnaire
-        fields = ['title', 'password']
+        fields = ('title', 'school_classes', 'start_date', 'due_date', 'quizzes' )
 
 class AlternativeForm(forms.ModelForm):
      class Meta:
         model = Alternative
-        fields = ['text', 'is_answer']
+        fields = ('text', 'is_answer')
 
 QuizInlineFormSet = inlineformset_factory(Quiz,
     Alternative,
     form=AlternativeForm,
     extra=4,
+    can_delete=False
 )

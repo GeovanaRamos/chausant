@@ -1,18 +1,21 @@
 {% extends "core/base.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-<form method="POST" >
-  {% csrf_token %}
-    <h2>Questão</h2>
-    {{ form }}
-    <h2>Alternativas</h2>
-    {{ formset.management_form }}
+<div class="container form-container">
+  <h2>Nova Questão</h2>
+
+  <form class="form-group" method="POST">
+    {% csrf_token %}
+   
+    {{ form|crispy }}
+    <h3>Alternativas</h3>
+    {{ inlines.management_form }}
+    {{ inlines.non_form_errors }}
     {% with inlines as formset %}
-      {{ formset }}
+      {{ formset|crispy }}
     {% endwith %}
-  <input type="submit" class="btn btn-primary" value="Salvar">
-</form>
+    <input type="submit" class="btn btn-primary" value="Salvar">
+  </form>
+</div>
 {% endblock %}
-
-
-
