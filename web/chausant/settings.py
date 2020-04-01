@@ -133,3 +133,5 @@ STATICFILES_DIRS = [
 ]
 
 AUTH_USER_MODEL = "questionnaire.User" 
+
+CRISPY_TEMPLATE_PACK="bootstrap3"
