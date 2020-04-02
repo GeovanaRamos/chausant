@@ -62,7 +62,6 @@
 	padding: 10px 30px;
 	display: block;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-	text-decoration: none;
 }
 
 #sidebar ul li a span {
@@ -78,8 +77,13 @@
 	list-style-type: none;
 }
 
-#sidebar #footer a {
-	text-decoration: none;
+a {
+	text-decoration: none !important;
+	color: var(--secondary);
+}
+
+a:hover {
+	color: var(--primary);
 }
 
 #content {
