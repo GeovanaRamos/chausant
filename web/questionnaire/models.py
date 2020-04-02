@@ -13,7 +13,6 @@ class User(AbstractUser):
 		return self.full_name
 
 class Teacher(models.Model):
-
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 	class Meta:
@@ -33,22 +32,31 @@ class Discipline(models.Model):
 	def __str__(self):
 		return self.name
 
-class SchoolLevel(models.Model):
-	number = models.IntegerField()
-	level = models.CharField(max_length=20)
+class School(models.Model):
+	name = models.CharField(max_length=50)
 
 	class Meta:
-		verbose_name = "Série Escolar"
-		verbose_name_plural = "Séries Escolares"
+		verbose_name = "Escola"
+		verbose_name_plural = "Escolas"
 
 	def __str__(self):
-		return str(self.number) + '°' + ' ano ' + self.level
+		return self.name
+
+class SchoolLevel(models.Model):
+	name = models.CharField(max_length=20)
+
+	class Meta:
+		verbose_name = "Nível Escolar"
+		verbose_name_plural = "Níveis Escolares"
+
+	def __str__(self):
+		return self.name
 
 class SchoolClass(models.Model):
 
 	school_level = models.ForeignKey(verbose_name="Nível Escolar",to=SchoolLevel, on_delete=models.CASCADE)
+	school = models.ForeignKey(School, verbose_name="Escola", on_delete=models.CASCADE) 
 	year = models.IntegerField(verbose_name="Ano de Realização")
-	letter = models.CharField(verbose_name="Letra", max_length=1, blank=True)
 	teacher = models.ForeignKey(verbose_name="Professor", to=Teacher, on_delete=models.CASCADE)
 	discipline = models.ForeignKey(verbose_name="Disciplina", to=Discipline, on_delete=models.CASCADE)
 
