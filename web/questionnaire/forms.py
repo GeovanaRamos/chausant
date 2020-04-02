@@ -3,7 +3,7 @@ from django.forms import inlineformset_factory
 from .models import Questionnaire, Alternative, Quiz
 
 class QuestionnaireForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput())
+    
     class Meta:
         model = Questionnaire
         fields = ('title', 'school_classes', 'start_date', 'due_date', 'quizzes' )
