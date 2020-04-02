@@ -101,6 +101,11 @@ class Questionnaire(models.Model):
 	def __str__(self):
 		return self.title
 
+	def is_active(self):
+		from django.utils import timezone
+		now = timezone.now()
+		return self.start_date <= now <= self.due_date
+
 class Alternative(models.Model):
 
 	text = models.CharField(verbose_name="Texto",max_length=20)
