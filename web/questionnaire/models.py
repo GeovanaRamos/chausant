@@ -20,7 +20,7 @@ class Teacher(models.Model):
 		verbose_name_plural = "Professores"
 
 	def __str__(self):
-		return self.full_name
+		return self.user.full_name
 
 class Discipline(models.Model):
 	name = models.CharField(verbose_name="Nome", max_length=50)
@@ -79,7 +79,7 @@ class Student(models.Model):
 		verbose_name_plural = "Estudantes"
 
 	def __str__(self):
-		return self.full_name
+		return self.user.full_name
 
 class Quiz(models.Model):
 
