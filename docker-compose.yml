@@ -10,10 +10,16 @@ services:
 
   web:
     build: ./web
-    command: python manage.py runserver 0.0.0.0:8000
+    
     volumes:
       - ./web:/code
     ports:
       - "8000:8000"
     depends_on:
       - db
+    command: >
+      /bin/bash -c "
+      sleep 7;
+      python manage.py migrate;
+      python util/populate.py;
+      python manage.py runserver 0.0.0.0:8000"
