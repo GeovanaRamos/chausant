@@ -1,22 +1,47 @@
 {% extends "core/base.html" %}
 
 {% block content %}
-<h1>Listas de Exercícios</h1>
+<a class="btn btn-primary float-right" href="{% url 'questionnaire_create' %}">Nova Lista de Exercícios</a>
+<h1 class="mb-5">Listas de Exercícios</h1>
 
-<a class="btn btn-primary" href="{% url 'questionnaire_create' %}">Nova Lista de Exercícios</a>
-
-<table>
+<table class="table">
   
   <thead>
     <tr>
-    <th>Name</th>
+    <th>Título</th>
+    <th>Início</th>
+    <th>Término</th>
+    <th>Status</th>
+    <th class="text-center">Ações</th>
     </tr>
   </thead>
 
   <tbody>
     {% for questionnaire in object_list %}
-      <tr>
+
         <td>{{ questionnaire.title }}</td>
+        <td>{{ questionnaire.start_date }}</td>
+        <td>{{ questionnaire.due_date }}</td>
+        {% if not questionnaire.is_supended %}
+          {% if questionnaire.is_active %}
+            <td>Em Andamento</td>
+          {% else %}
+            <td>Fechada</td>
+          {% endif %}
+        {% else %}
+          <td>Suspensa</td>
+        {% endif %}
+        <td class="text-center">
+          <a title="Relatório" href="{% url 'questionnaire_detail' questionnaire.pk %}">
+            <i class="fas fa-info-circle"></i>
+          </a>
+          <a class="ml-2" title="Deletar" href="">
+            <i class="fas fa-trash-alt"></i>
+          </a>
+          <a class="ml-2" title="Suspender" href="">
+            <i class="fas fa-ban"></i>
+          </a>
+        </td>
       </tr>
 
     {% endfor %}
