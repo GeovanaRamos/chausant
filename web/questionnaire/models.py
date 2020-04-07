@@ -65,7 +65,7 @@ class SchoolClass(models.Model):
 		verbose_name_plural = "Turmas"
 
 	def __str__(self):
-		school_class =  "Turma " + self.letter + '/' + str(self.year) + '-' + str(self.discipline)
+		school_class =  '/' + str(self.year) + ' - ' + str(self.discipline)
 		return  str(self.school_level) + school_class
 
 
