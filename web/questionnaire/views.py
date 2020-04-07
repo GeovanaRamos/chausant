@@ -10,10 +10,15 @@ class QuestionnaireList(ListView):
 
 class QuestionnaireCreate(CreateView):
     model = Questionnaire
-    form_class = QuestionnaireForm
+    form_class = QuestionnaireForm 
+    success_url = reverse_lazy('questionnaire_list')
 
 class QuestionnaireDetail(DetailView):
     model = Questionnaire
+
+class QuestionnaireDelete(DeleteView):
+    model = Questionnaire
+    success_url = reverse_lazy('questionnaire_list')
 
 class QuizCreate(CreateView):
     model = Quiz
