@@ -1,26 +1,58 @@
 {% extends "core/base.html" %}
 
 {% block content %}
-<h1>Turmas</h1>
+<a class="btn btn-primary float-right" href="{% url 'schoolclass_create' %}">Nova Turma</a>
+<h1 class="mb-5">Minhas Turmas</h1>
 
-<a href="{% url 'schoolclass_create'%}">Criar turma</a>
+{% for school_class in object_list %}
+{% if forloop.first or forloop.counter0|divisibleby:3 %}
+<div class="row justify-content-center">
+  {% endif %}
 
-<table>
+  <div class="card mr-2 ml-2 mb-4" style="min-width: 300px; max-width: 300px;">
+    <div class="card-body text-center mt-4">
+      <h4 class="card-title">{{ school_class.school_level }}/{{school_class.year }} </h4>
 
-	<thead>
-		<tr>
-			<th>Nome</th>
-		</tr>
-	</thead>
+      <p class="card-text">
+        {{ school_class.discipline }}
+      </p>
+      <ul class="list-inline">
+        <li class="list-inline-item">
+          <i class="delete fas fa-trash-alt fa-lg"
+            data-href="{% url 'schoolclass_delete' school_class.pk %}"></i>
+        </li>
+      </ul>
+    </div>
+  </div>
+  {% if  forloop.counter|divisibleby:3 %}
+</div>
+{% endif %}
 
-	<tbody>
-		{% for schoolclass in object_list %}
-		<tr>
-			<td>{{ schoolclass }}</td>
-		</tr>
+{% endfor %}
+</div>
 
-		{% endfor %}
-	</tbody>
 
-</table>
+{% endblock %}
+
+{% block js %}
+
+<script>
+
+  $(document).ready(function () {
+    var postData = { csrfmiddlewaretoken: '{{ csrf_token }}' }
+    $(".delete").click(function () {
+      alert("a");
+      $.ajax({
+        method: 'POST',
+        url: $(this).attr("data-href"),
+        data: postData,
+        success: function (response) {
+          window.location.reload();
+        },
+      });
+    });
+  });
+
+</script>
+
 {% endblock %}

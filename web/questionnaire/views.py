@@ -42,20 +42,13 @@ class QuizList(ListView):
 class SchoolClassCreate(CreateView):
     model = SchoolClass
     fields = '__all__'
+    success_url = reverse_lazy('schoolclass_list')
 
 class SchoolClassList(ListView):
     model = SchoolClass
 
-class StudentsList(ListView):
-    model = Student
+class SchoolClassDelete(DeleteView):
+    model = SchoolClass
+    success_url = reverse_lazy('schoolclass_list')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        
-        teacher = self.request.user.teacher
-        school_class = SchoolClass.objects.filter(teacher=teacher)
-        
-        context["students"] =  Student.objects.filter(school_class__in=school_class)
-        
-        return context
     
