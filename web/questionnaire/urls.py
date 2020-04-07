@@ -9,5 +9,6 @@ urlpatterns = [
     path('quiz', views.QuizList.as_view(), name='quiz_list'),
     path("schoolclass", views.SchoolClassList.as_view(), name="schoolclass_list"),
     path("schoolclass/create", views.SchoolClassCreate.as_view(), name="schoolclass_create"),
-    path("schoolclass/delete/<pk>", views.SchoolClassDelete.as_view(), name="schoolclass_delete")
+    path("schoolclass/delete/<pk>", views.SchoolClassDelete.as_view(), name="schoolclass_delete"),
+    path("/detail/<pk>", views.QuestionnaireDetail.as_view(), name="questionnaire_detail")
 ]

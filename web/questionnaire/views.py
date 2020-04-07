@@ -12,6 +12,9 @@ class QuestionnaireCreate(CreateView):
     model = Questionnaire
     form_class = QuestionnaireForm
 
+class QuestionnaireDetail(DetailView):
+    model = Questionnaire
+
 class QuizCreate(CreateView):
     model = Quiz
     fields = ['question']
