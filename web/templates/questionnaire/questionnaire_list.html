@@ -20,8 +20,8 @@
     {% for questionnaire in object_list %}
 
     <td>{{ questionnaire.title }}</td>
-    <td>{{ questionnaire.start_date }}</td>
-    <td>{{ questionnaire.due_date }}</td>
+    <td>{{ questionnaire.start_date|date:'d/m/Y' }}</td>
+    <td>{{ questionnaire.due_date|date:'d/m/Y' }}</td>
     {% if not questionnaire.is_supended %}
     {% if questionnaire.is_active %}
     <td>Em Andamento</td>
