@@ -41,7 +41,6 @@
   $(document).ready(function () {
     var postData = { csrfmiddlewaretoken: '{{ csrf_token }}' }
     $(".delete").click(function () {
-      alert("a");
       $.ajax({
         method: 'POST',
         url: $(this).attr("data-href"),
