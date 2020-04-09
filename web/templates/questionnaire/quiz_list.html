@@ -1,29 +1,94 @@
 {% extends "core/base.html" %}
 
+{% block css %}
+
+<style>
+  .panel-heading {
+    padding: 0;
+    border: 0;
+  }
+
+  .panel-title>a,
+  .panel-title>a:active {
+    display: block;
+    padding: 15px;
+    color: #555;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    word-spacing: 3px;
+    text-decoration: none;
+  }
+
+  .panel-heading a:before {
+    font-family: FontAwesome;
+    content: "\f107";
+    float: right;
+    font-size: 20px;
+  }
+
+  .panel-title  {
+    background-color: rgb(236, 236, 236); 
+  }
+
+</style>
+
+{% endblock  %}
+
 {% block content %}
-<h1>Questões</h1>
-<a href="{% url 'quiz_create' %}">Nova Questão</a>
+<a class="btn btn-primary float-right" href="{% url 'quiz_create' %}">Nova Questão</a>
+<h1 class="mb-5">Questões</h1>
 
-<table>
-  
-  <thead>
-    <tr>
-    <th>Pergunta</th>
-    </tr>
-  </thead>
+<div class="container">
+  {% for quiz in object_list %}
+  <div class="wrapper center-block">
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default">
+        <div class="panel-heading active" role="tab" id="headingOne">
+          <h4 class="panel-title border">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{quiz.pk}}"
+              aria-expanded="false" aria-controls="collapseOne" id="accordion-toggle">
+              {{quiz.title}}
+            </a>
+          </h4>
+        </div>
+        <div id="collapse-{{quiz.pk}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+          <div class="row panel-body ml-3">
+            <div class="col-11">
+              {{quiz.question}}<br>
+              
+              {% for alternative in quiz.alternative_set.all %}
+                {% if alternative.is_answer %} 
+                  <i class="fas fa-check" style="color: var(--primary);"></i>
+                {% else %}
+                  <i class="fas fa-times ml-1"></i>
+                {% endif %}
+                {{alternative.text}}<br>
+              {% endfor %}
+            </div>
+            <div class="col">
+              <i class="fas fa-trash float-right mr-3 mt-3"></i>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
 
-  <tbody>
-    {% for quiz in object_list %}
-      <tr>
-        <td>{{ quiz.question }}</td>
-        <td>
-          editar
-        </td>
-      </tr>
+{% endblock %}
 
-    {% endfor %}
-  </tbody>
+{% block js %}
+<script>
+  $('.panel-collapse').on('show.bs.collapse', function () {
+    $(this).siblings('.panel-heading').addClass('active');
+  });
 
-</table>
-
+  $('.panel-collapse').on('hide.bs.collapse', function () {
+    $(this).siblings('.panel-heading').removeClass('active');
+  });
+</script>
 {% endblock %}
