@@ -23,7 +23,7 @@ class QuestionnaireDelete(DeleteView):
 class QuizCreate(CreateView):
     model = Quiz
     fields = ['question']
-    success_url = reverse_lazy('questionnaire_list')
+    success_url = reverse_lazy('quiz_list')
 
     def get_context_data(self, **kwargs):
         data = super(QuizCreate, self).get_context_data(**kwargs)
@@ -46,6 +46,11 @@ class QuizCreate(CreateView):
 
 class QuizList(ListView):
 	model = Quiz 
+
+class QuizDelete(DeleteView):
+    model = Quiz
+    success_url = reverse_lazy('quiz_list')
+
 
 class SchoolClassCreate(CreateView):
     model = SchoolClass

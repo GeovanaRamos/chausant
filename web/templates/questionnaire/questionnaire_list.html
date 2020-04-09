@@ -36,8 +36,9 @@
         <i class="fas fa-info-circle"></i>
       </a>
 
-        <i class="delete ml-2 fas fa-trash-alt" data-href="{% url 'questionnaire_delete' questionnaire.pk %}"></i>
-     
+      <i class="delete ml-2 fas fa-trash-alt" title="Deletar"
+        data-href="{% url 'questionnaire_delete' questionnaire.pk %}"></i>
+
       <a class="ml-2" title="Suspender" href="">
         <i class="fas fa-ban"></i>
       </a>

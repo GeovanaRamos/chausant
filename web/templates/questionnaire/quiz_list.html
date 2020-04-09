@@ -28,10 +28,9 @@
     font-size: 20px;
   }
 
-  .panel-title  {
-    background-color: rgb(236, 236, 236); 
+  .panel-title {
+    background-color: rgb(236, 236, 236);
   }
-
 </style>
 
 {% endblock  %}
@@ -57,20 +56,21 @@
           <div class="row panel-body ml-3">
             <div class="col-11">
               {{quiz.question}}<br>
-              
+
               {% for alternative in quiz.alternative_set.all %}
-                {% if alternative.is_answer %} 
-                  <i class="fas fa-check" style="color: var(--primary);"></i>
-                {% else %}
-                  <i class="fas fa-times ml-1"></i>
-                {% endif %}
-                {{alternative.text}}<br>
+              {% if alternative.is_answer %}
+              <i class="fas fa-check" style="color: var(--primary);"></i>
+              {% else %}
+              <i class="fas fa-times ml-1"></i>
+              {% endif %}
+              {{alternative.text}}<br>
               {% endfor %}
             </div>
             <div class="col">
-              <i class="fas fa-trash float-right mr-3 mt-3"></i>
+              <i class="delete fas fa-trash-alt mr-3 mt-3 float-right" title="Deletar Questão"
+                data-href="{% url 'quiz_delete' quiz.pk %}"></i>
             </div>
-            
+
           </div>
         </div>
       </div>
@@ -90,5 +90,20 @@
   $('.panel-collapse').on('hide.bs.collapse', function () {
     $(this).siblings('.panel-heading').removeClass('active');
   });
+
+  $(document).ready(function () {
+    var postData = { csrfmiddlewaretoken: '{{ csrf_token }}' };
+    $(".delete").click(function () {
+      $.ajax({
+        method: 'POST',
+        url: $(this).attr("data-href"),
+        data: postData,
+        success: function (response) {
+          window.location.reload();
+        },
+      });
+    });
+  });
+
 </script>
 {% endblock %}
