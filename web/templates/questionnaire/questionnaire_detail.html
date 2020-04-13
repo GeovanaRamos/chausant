@@ -1,10 +1,94 @@
-{% extends "core/base.html" %}
+{% load static %}
+<!doctype html>
+<html lang="pt">
 
-{% block content %}
-<h1>Questionnaire Details</h1>
+<head>
+  <title>Chausant</title>
 
-<p>Name: {{object.name}}</p>
-<p>Email: {{object.email}}</p>
-<p>Address: {{object.address}}</p>
-<p>Phone: {{object.phone}}</p>
-{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
+    id="bootstrap-css">
+  <script src="https://kit.fontawesome.com/2b7b22e50b.js" crossorigin="anonymous"></script>
+  <link href="{% static 'core/css/styles.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+
+  <div class="container">
+
+    <div class="row clearfix">
+    </div>
+    <div class="col-md-1 column">
+    </div>
+    <div class="col-md-10 column">
+      <p class="lead">Completo al 40%</p>
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: 99%;">
+          <span class="sr-only">Completo al 40%</span>
+        </div>
+      </div>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            Domanda
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked=""> Questa è la
+              risposta uno. Fossi in te, la lascerei perdere
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> Forse la due si avvicina...
+              ma non ci giurerei
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3"> Opzione tre — da' retta, è
+              questa
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadios" id="optionsRadios4" value="option4"> Sulla risposta quattro non
+              ci metterei la mano sul fuoco...
+            </label>
+          </div>
+
+        </div>
+        <div class="panel-footer">
+          <a href="#" class="btn btn-primary " role="button">Conferma</a>
+          <a href="#" class="btn btn-default disabled" role="button">Avanti</a>
+        </div>
+      </div>
+      <div class="col-md-1 column">
+      </div>
+    </div>
+  </div>
+
+  <script type='text/javascript' src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script type='text/javascript' src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+    integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+
+  {% block js %}
+  {% endblock %}
+</body>
+
+</html>
