@@ -13,4 +13,4 @@ urlpatterns = [
     path("detail/<pk>", views.QuestionnaireDetail.as_view(), name="questionnaire_detail"),
     path("delete/<pk>", views.QuestionnaireDelete.as_view(), name="questionnaire_delete"),
     path("quiz/delete/<pk>", views.QuizDelete.as_view(), name="quiz_delete")
-]   
+]
