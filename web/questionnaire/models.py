@@ -118,6 +118,9 @@ class Questionnaire(models.Model):
         now = timezone.now()
         return self.start_date <= now <= self.due_date
 
+    def get_first_quiz_pk(self):
+        return self.quizzes.first().pk
+
 
 class Alternative(models.Model):
     text = models.CharField(verbose_name="Texto", max_length=20)
@@ -136,6 +139,7 @@ class Alternative(models.Model):
 class QuizGrade(models.Model):
     grade = models.FloatField()
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
 
     class Meta:

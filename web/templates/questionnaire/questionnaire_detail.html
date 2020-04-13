@@ -1,94 +1,67 @@
+{% extends "core/base.html" %}
 {% load static %}
-<!doctype html>
-<html lang="pt">
 
-<head>
-  <title>Chausant</title>
+{% block css %}
+ <link href="{% static 'core/css/quiz_list.css' %}" rel="stylesheet">
+{% endblock  %}
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+{% block content %}
+  {% if user.student %}
+    <a class="btn btn-primary float-right" href="{% url 'questionnaire_detail' object.get_first_quiz_pk %}">
+      Responder
+    </a>
+  {% endif %}
 
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
-    id="bootstrap-css">
-  <script src="https://kit.fontawesome.com/2b7b22e50b.js" crossorigin="anonymous"></script>
-  <link href="{% static 'core/css/styles.css' %}" rel="stylesheet">
+  <h1>{{object.title}}</h1>
 
-</head>
-
-<body>
-
-
-
-  <div class="container">
-
-    <div class="row clearfix">
-    </div>
-    <div class="col-md-1 column">
-    </div>
-    <div class="col-md-10 column">
-      <p class="lead">Completo al 40%</p>
-      <div class="progress">
-        <div class="progress-bar" role="progressbar" style="width: 99%;">
-          <span class="sr-only">Completo al 40%</span>
-        </div>
-      </div>
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            Domanda
-          </h3>
-        </div>
-        <div class="panel-body">
-          <div class="radio">
-            <label>
-              <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked=""> Questa è la
-              risposta uno. Fossi in te, la lascerei perdere
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> Forse la due si avvicina...
-              ma non ci giurerei
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3"> Opzione tre — da' retta, è
-              questa
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="optionsRadios" id="optionsRadios4" value="option4"> Sulla risposta quattro non
-              ci metterei la mano sul fuoco...
-            </label>
-          </div>
-
-        </div>
-        <div class="panel-footer">
-          <a href="#" class="btn btn-primary " role="button">Conferma</a>
-          <a href="#" class="btn btn-default disabled" role="button">Avanti</a>
-        </div>
-      </div>
-      <div class="col-md-1 column">
-      </div>
-    </div>
+  <div class="container mt-5">
+    <p><strong>Início:</strong> <a href="">{{ object.start_date|date:'d/m/Y' }}</a></p>
+    <p><strong>Término:</strong> {{ object.due_date|date:'d/m/Y' }}</p>
+    <p><strong>Número de Questões:</strong> {{ object.quizzes.all|length }}</p>
   </div>
 
-  <script type='text/javascript' src="https://code.jquery.com/jquery-3.4.1.min.js"
-    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script type='text/javascript' src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-    integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+  {% if user.teacher %}
+    <div class="container">
+       <h4 class="mt-5 mb-4">Questões</h4>
+      {% for quiz in object.quizzes.all %}
+      <div class="wrapper center-block">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+          <div class="panel panel-default">
+            <div class="panel-heading active" role="tab" id="headingOne">
+              <h4 class="panel-title border">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{quiz.pk}}"
+                  aria-expanded="false" aria-controls="collapseOne" id="accordion-toggle">
+                  {{quiz.title}}
+                </a>
+              </h4>
+            </div>
+            <div id="collapse-{{quiz.pk}}" class="panel-collapse collapse in" role="tabpanel"
+                 aria-labelledby="headingOne">
+              <div class="row panel-body ml-3">
+                <div class="col-11">
+                  {{quiz.question}}<br>
 
-  {% block js %}
-  {% endblock %}
-</body>
+                  {% for alternative in quiz.alternative_set.all %}
+                  {% if alternative.is_answer %}
+                  <i class="fas fa-check" style="color: var(--primary);"></i>
+                  {% else %}
+                  <i class="fas fa-times ml-1"></i>
+                  {% endif %}
+                  {{alternative.text}}<br>
+                  {% endfor %}
+                </div>
+                <div class="col">
+                  <i class="delete fas fa-trash-alt mr-3 mt-3 float-right" title="Deletar Questão"
+                    data-href="{% url 'quiz_delete' quiz.pk %}"></i>
+                </div>
 
-</html>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+{% endblock %}

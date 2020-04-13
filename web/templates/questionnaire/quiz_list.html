@@ -2,38 +2,7 @@
 {% load static %}
 
 {% block css %}
-
-<style>
-  .panel-heading {
-    padding: 0;
-    border: 0;
-  }
-
-  .panel-title>a,
-  .panel-title>a:active {
-    display: block;
-    padding: 15px;
-    color: #555;
-    font-size: 16px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    word-spacing: 3px;
-    text-decoration: none;
-  }
-
-  .panel-heading a:before {
-    font-family: FontAwesome;
-    content: "\f107";
-    float: right;
-    font-size: 20px;
-  }
-
-  .panel-title {
-    background-color: rgb(236, 236, 236);
-  }
-</style>
-
+ <link href="{% static 'core/css/quiz_list.css' %}" rel="stylesheet">
 {% endblock  %}
 
 {% block content %}
@@ -83,17 +52,5 @@
 {% endblock %}
 
 {% block js %}
-<script>
-  $('.panel-collapse').on('show.bs.collapse', function () {
-    $(this).siblings('.panel-heading').addClass('active');
-  });
-
-  $('.panel-collapse').on('hide.bs.collapse', function () {
-    $(this).siblings('.panel-heading').removeClass('active');
-  });
-
-</script>
-
 <script src="{% static 'core/js/delete.js' %}" crossorigin="anonymous"></script>
-
 {% endblock %}
