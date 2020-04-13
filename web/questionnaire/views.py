@@ -54,6 +54,10 @@ class QuizList(ListView):
     model = Quiz
 
 
+class QuizDetail(DetailView):
+    model = Quiz
+
+
 class QuizDelete(DeleteView):
     model = Quiz
     success_url = reverse_lazy('quiz_list')
