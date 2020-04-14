@@ -258,23 +258,25 @@ def populate():
 
 
     print ('\n------------------------')
-    print ('Creating QuizGrade ...')
+    print ('Creating QuizResult ...')
     print ('------------------------\n')
 
-    quiz_grade_1 = QuizGrade.objects.create(
-        grade=80.20,
+    quiz_result_1 = QuizResult.objects.create(
+        is_correct=True,
         quiz=quiz_1,
         student=student_1,
+        questionnaire=questionnaire_1
     )
 
-    quiz_grade_2 = QuizGrade.objects.create(
-        grade=50.20,
+    quiz_result_2 = QuizResult.objects.create(
+        is_correct=False,
         quiz=quiz_2,
         student=student_2,
+        questionnaire=questionnaire_2
     )
 
     print ('\n------------------------------\n')
-    print ('Database populated with sucess')
+    print ('Database populated with success')
     print ('------------------------------\n')
 
 
@@ -291,7 +293,7 @@ from questionnaire.models import Student
 from questionnaire.models import Questionnaire
 from questionnaire.models import Quiz
 from questionnaire.models import Alternative
-from questionnaire.models import QuizGrade
+from questionnaire.models import QuizResult
 from questionnaire.models import User
 from questionnaire.models import School
 

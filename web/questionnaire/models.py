@@ -136,8 +136,8 @@ class Alternative(models.Model):
         return self.letter
 
 
-class QuizGrade(models.Model):
-    grade = models.FloatField()
+class QuizResult(models.Model):
+    is_correct = models.BooleanField()
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
@@ -145,6 +145,7 @@ class QuizGrade(models.Model):
     class Meta:
         verbose_name = "Notas"
         verbose_name_plural = "Notas"
+        # TODO unique
 
     def __str__(self):
         return "Nota" + self.quiz.title
