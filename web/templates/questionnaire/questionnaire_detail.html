@@ -7,7 +7,7 @@
 
 {% block content %}
   {% if user.student %}
-    <a class="btn btn-primary float-right" href="{% url 'quiz_detail' object.pk object.get_first_quiz_pk %}">
+    <a class="btn btn-primary float-right" href="{% url 'quiz_student_list' object.pk %}">
       Responder
     </a>
   {% endif %}

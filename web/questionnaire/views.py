@@ -1,8 +1,11 @@
+import json
 from django.urls import reverse_lazy
 from django.db import transaction
+from django.http import JsonResponse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Questionnaire, Quiz, Alternative, SchoolClass, Student
+from django.views.generic import View
+from .models import Questionnaire, Quiz, Alternative, SchoolClass, Student, QuizResult
 from .forms import QuestionnaireForm, QuizInlineFormSet
 
 
@@ -14,6 +17,7 @@ class QuestionnaireCreate(CreateView):
     model = Questionnaire
     form_class = QuestionnaireForm
     success_url = reverse_lazy('questionnaire_list')
+    # TODO correct date and time input
 
 
 class QuestionnaireDetail(DetailView):
@@ -54,8 +58,19 @@ class QuizList(ListView):
     model = Quiz
 
 
-class QuizDetail(DetailView):
+class QuizStudentList(ListView):
     model = Quiz
+    template_name = "questionnaire/quiz_student_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(QuizStudentList, self).get_context_data(**kwargs)
+        questionnaire = Questionnaire.objects.get(pk=self.kwargs.get('questionnaire_pk'))
+        context['qt_pk'] = questionnaire.pk
+        return context
+
+    def get_queryset(self):
+        questionnaire = Questionnaire.objects.get(pk=self.kwargs.get('questionnaire_pk'))
+        return questionnaire.quizzes.all()
 
 
 class QuizDelete(DeleteView):
@@ -76,3 +91,22 @@ class SchoolClassList(ListView):
 class SchoolClassDelete(DeleteView):
     model = SchoolClass
     success_url = reverse_lazy('schoolclass_list')
+
+
+class QuizResultCreate(View):
+
+    def post(self, request):
+        print(request.POST)
+        questionnaire = request.POST.get('questionnaire')
+        answers = json.loads(request.POST.get('answers'))
+        print(answers)
+        print(questionnaire)
+        for key, value in answers.items():
+            QuizResult.objects.create(
+                questionnaire=Questionnaire.objects.get(pk=questionnaire),
+                student=request.user.student,
+                quiz=Quiz.objects.get(pk=key),
+                is_correct=Alternative.objects.get(pk=value).is_answer
+            )
+        return JsonResponse({"message":"done"})
+
