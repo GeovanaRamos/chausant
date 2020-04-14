@@ -118,9 +118,6 @@ class Questionnaire(models.Model):
         now = timezone.now()
         return self.start_date <= now <= self.due_date
 
-    def get_first_quiz_pk(self):
-        return self.quizzes.first().pk
-
 
 class Alternative(models.Model):
     text = models.CharField(verbose_name="Texto", max_length=20)
