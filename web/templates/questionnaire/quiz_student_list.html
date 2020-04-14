@@ -1,0 +1,115 @@
+{% load static %}
+<!doctype html>
+<html lang="pt">
+
+<head>
+  <title>Chausant</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
+        id="bootstrap-css">
+  <script src="https://kit.fontawesome.com/2b7b22e50b.js" crossorigin="anonymous"></script>
+  <link href="{% static 'core/css/styles.css' %}" rel="stylesheet">
+
+  <style>
+      .panel {
+          width: 75%;
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: 100px;
+          margin-bottom: 100px;
+          background-color: white;
+      }
+
+      body {
+        background-color: var(--primary);
+      }
+    </style>
+
+</head>
+
+<body>
+
+
+<div id="{{forloop.counter0}}" class="panel panel-primary p-5">
+{% for quiz in object_list %}
+  <div class="panel-heading mb-4">
+    <h1 class="panel-title">
+      Questão {{forloop.counter}}
+    </h1>
+  </div>
+
+  <div class="panel-body ml-5">
+    <p>{{quiz.question}}</p>
+    {% for alternative in quiz.alternative_set.all %}
+    <div class="radio-{{quiz.pk}}">
+      <label>
+        <input type="radio" name="{{quiz.pk}}" value="{{alternative.pk}}" >
+        {{alternative.text}}
+      </label>
+    </div>
+    {% endfor %}
+
+  </div>
+
+{% endfor %}
+  <div class="panel-footer float-right">
+    <button class="finish btn btn-primary" disabled>Finalizar</button>
+  </div>
+</div>
+
+
+<script type='text/javascript' src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script type='text/javascript' src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script>
+$(document).ready(function(){
+    var names = {};
+
+    $(":radio").change(function() {
+        var check = true;
+        names[$(this).attr('name')] = $(this).val();
+
+        $("input:radio").each(function(){
+            var name = $(this).attr("name");
+            if($("input:radio[name="+name+"]:checked").length == 0){
+                check = false;
+            }
+        });
+
+        if(check){
+            $('.finish').prop('disabled', false);
+        }
+    }).change();
+
+
+    $(".finish").on("click", function(e) {
+
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'quizresult_create'%}",
+            dataType: 'json',
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', questionnaire: {{qt_pk}}, answers: JSON.stringify(names)},
+            success: function (res, status) {
+                console.log("Resultado salvo");
+                window.location.href = "{% url 'questionnaire_list'%}";
+            },
+            error: function (res) {
+                console.log("Erro");
+            }
+        });
+
+
+    });
+
+});
+
+</script>
+</body>
+
+
+</html>
