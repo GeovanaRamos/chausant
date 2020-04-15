@@ -63,18 +63,27 @@ class QuizCreate(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         context = self.get_context_data()
         inlines = context['inlines']
+
+        self.object = form.save(commit=False)
+        self.object.teacher = self.request.user.teacher
+        self.object.save()
+
         with transaction.atomic():
             self.object = form.save()
 
             if inlines.is_valid():
                 inlines.instance = self.object
                 inlines.save()
+
         return super(QuizCreate, self).form_valid(form)
 
 
 class QuizList(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('sign_in')
     model = Quiz
+
+    def get_queryset(self):
+        return Quiz.objects.filter(teacher=self.request.user.teacher)
 
 
 class QuizStudentList(LoginRequiredMixin, ListView):
