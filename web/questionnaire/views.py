@@ -7,29 +7,35 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import View
 from .models import Questionnaire, Quiz, Alternative, SchoolClass, User, QuizResult
 from .forms import QuestionnaireForm, QuizInlineFormSet, CustomUserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class QuestionnaireList(ListView):
+class QuestionnaireList(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('sign_in')
     model = Questionnaire
 
 
-class QuestionnaireCreate(CreateView):
+class QuestionnaireCreate(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy('sign_in')
     model = Questionnaire
     form_class = QuestionnaireForm
     success_url = reverse_lazy('questionnaire_list')
     # TODO correct date and time input
 
 
-class QuestionnaireDetail(DetailView):
+class QuestionnaireDetail(LoginRequiredMixin, DetailView):
+    login_url = reverse_lazy('sign_in')
     model = Questionnaire
 
 
-class QuestionnaireDelete(DeleteView):
+class QuestionnaireDelete(LoginRequiredMixin, DeleteView):
+    login_url = reverse_lazy('sign_in')
     model = Questionnaire
     success_url = reverse_lazy('questionnaire_list')
 
 
-class QuizCreate(CreateView):
+class QuizCreate(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy('sign_in')
     model = Quiz
     fields = ['title', 'question']
     success_url = reverse_lazy('quiz_list')
@@ -54,11 +60,13 @@ class QuizCreate(CreateView):
         return super(QuizCreate, self).form_valid(form)
 
 
-class QuizList(ListView):
+class QuizList(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('sign_in')
     model = Quiz
 
 
-class QuizStudentList(ListView):
+class QuizStudentList(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('sign_in')
     model = Quiz
     template_name = "questionnaire/quiz_student_list.html"
 
@@ -73,27 +81,32 @@ class QuizStudentList(ListView):
         return questionnaire.quizzes.all()
 
 
-class QuizDelete(DeleteView):
+class QuizDelete(LoginRequiredMixin, DeleteView):
+    login_url = reverse_lazy('sign_in')
     model = Quiz
     success_url = reverse_lazy('quiz_list')
 
 
-class SchoolClassCreate(CreateView):
+class SchoolClassCreate(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy('sign_in')
     model = SchoolClass
     fields = '__all__'
     success_url = reverse_lazy('schoolclass_list')
 
 
-class SchoolClassList(ListView):
+class SchoolClassList(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('sign_in')
     model = SchoolClass
 
 
-class SchoolClassDelete(DeleteView):
+class SchoolClassDelete(LoginRequiredMixin, DeleteView):
+    login_url = reverse_lazy('sign_in')
     model = SchoolClass
     success_url = reverse_lazy('schoolclass_list')
 
 
-class QuizResultCreate(View):
+class QuizResultCreate(LoginRequiredMixin, View):
+    login_url = reverse_lazy('sign_in')
 
     def post(self, request):
         print(request.POST)
