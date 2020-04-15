@@ -14,6 +14,18 @@ class QuestionnaireList(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('sign_in')
     model = Questionnaire
 
+    def get_queryset(self):
+        if hasattr(self.request.user, 'student'):
+            student = self.request.user.student
+            school_classes = student.school_classes
+            return Questionnaire.objects.filter(school_class__id__in=school_classes)
+        elif hasattr(self.request.user, 'teacher'):
+            teacher = self.request.user.teacher
+            school_classes = SchoolClass.objects.filter(teacher=teacher)
+            return Questionnaire.objects.filter(school_classes__id__in=school_classes)
+
+        return Questionnaire.objects.none()
+
 
 class QuestionnaireCreate(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('sign_in')
