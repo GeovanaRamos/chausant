@@ -32,9 +32,17 @@
           <div class="myform form ">
             {% if next %}
             {% if user.is_authenticated %}
-            <p>Você não tem permissão para acessar essa página.</p>
+            <small id="teacher-warning">
+              <p style="color:green; text-align: center;">
+                Você não tem permissão para acessar essa página.
+              </p>
+            </small>
             {% else %}
-            <p>Faça login para acessar a página.</p>
+            <small id="teacher-warning">
+              <p style="color:green; text-align: center;">
+                Faça login para acessar a página.
+              </p>
+            </small>
             {% endif %}
             {% endif %}
 
