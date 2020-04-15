@@ -18,7 +18,8 @@ def create_super_user(username, email):
         u = User.objects.create_superuser(username,
                                           email,
                                           password,
-                                          is_validated=True)
+                                          request_type=1,
+                                          is_active=True)
 
         return u
 
@@ -39,7 +40,8 @@ def create_user(name, username, email):
             username=username,
             email=email,
             password=password,
-            is_validated=True
+            request_type=2,
+            is_active=True
         )
 
         return u

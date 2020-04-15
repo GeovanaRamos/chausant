@@ -3,8 +3,22 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
+
+    TEACHER = 0
+    STUDENT = 1
+
+    USER_TYPES = (
+        (TEACHER, "Professor"),
+        (STUDENT, "Aluno"),
+    )
+
+    email = models.EmailField(verbose_name="Email", unique=True)
     full_name = models.CharField(verbose_name="Nome Completo", max_length=70)
-    is_validated = models.BooleanField(default=False)
+    request_type = models.IntegerField(verbose_name="Tipo de Usuário", choices=USER_TYPES)
+    is_active = models.BooleanField(verbose_name="Está ativo?", default=False)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
     class Meta:
         verbose_name = "Usuário"

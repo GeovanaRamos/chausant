@@ -6,7 +6,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import View
 from .models import Questionnaire, Quiz, Alternative, SchoolClass, Student, QuizResult
-from .forms import QuestionnaireForm, QuizInlineFormSet
+from .forms import QuestionnaireForm, QuizInlineFormSet, CustomUserCreationForm
 
 
 class QuestionnaireList(ListView):
@@ -110,3 +110,8 @@ class QuizResultCreate(View):
             )
         return JsonResponse({"message":"done"})
 
+
+class SignUp(CreateView):
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy('sign_in')
+    template_name = 'registration/sign_up.html'

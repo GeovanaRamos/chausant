@@ -1,0 +1,55 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+<!doctype html>
+<html lang="pt">
+
+<head>
+  <title>Chausant</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
+  <link href="{% static 'core/css/styles.css' %}" rel="stylesheet">
+  <link href="{% static 'registration/css/styles.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="vertical-center">
+      <div class="col-md-5 mx-auto mt5">
+        <div id="first">
+          <div id="logo">
+            <div class="center">
+              <img class="float-left mt-3" src="{% static 'core/img/logo.png' %}" width="50"><h1>hausant</h1>
+            </div>
+          </div>
+
+          <div class="myform form ">
+            {% if next %}
+            {% if user.is_authenticated %}
+            <p>Você não tem permissão para acessar essa página.</p>
+            {% else %}
+            <p>Faça login para acessar a página.</p>
+            {% endif %}
+            {% endif %}
+
+               <form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" class="btn btn-primary" value="Salvar">
+  </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+
+</html>
