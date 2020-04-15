@@ -102,6 +102,7 @@ class Student(models.Model):
 class Quiz(models.Model):
     title = models.CharField(verbose_name="Título", max_length=50)
     question = models.TextField(verbose_name="Pergunta")
+    teacher = models.ForeignKey(verbose_name="Professor", to=Teacher, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Questão"

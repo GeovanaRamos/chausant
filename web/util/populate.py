@@ -162,11 +162,13 @@ def populate():
     quiz_1 = Quiz.objects.create(
         title='Matriz',
         question='Qual letra?',
+        teacher=teacher_1
     )
     
     quiz_2 = Quiz.objects.create(
         title='Algebra',
         question='Qual alternativa?',
+        teacher=teacher_1
     )
 
     print ('\n------------------------')
