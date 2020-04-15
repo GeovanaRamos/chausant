@@ -37,8 +37,9 @@
               {% endfor %}
             </div>
             <div class="col">
-              <i class="delete fas fa-trash-alt mr-3 mt-3 float-right" title="Deletar Questão"
-                data-href="{% url 'quiz_delete' quiz.pk %}"></i>
+              <a href="#" class="delete" title="Deletar Questão" data-href="{% url 'quiz_delete' quiz.pk %}">
+                <i class="fas fa-trash-alt mr-3 mt-3 float-right"></i>
+              </a>
             </div>
 
           </div>

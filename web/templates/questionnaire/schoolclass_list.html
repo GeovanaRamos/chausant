@@ -19,8 +19,9 @@
       </p>
       <ul class="list-inline">
         <li class="list-inline-item">
-          <i class="delete fas fa-trash-alt fa-lg"
-            data-href="{% url 'schoolclass_delete' school_class.pk %}"></i>
+          <a href="#" class="delete" title="Deletar Turma" data-href="{% url 'schoolclass_delete' school_class.pk %}">
+            <i class="fas fa-trash-alt fa-lg"></i>
+          </a>
         </li>
       </ul>
     </div>
