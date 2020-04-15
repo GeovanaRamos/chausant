@@ -2,7 +2,11 @@
 {% load static %}
 
 {% block content %}
+
+ {% if user.teacher %}
 <a class="btn btn-primary float-right" href="{% url 'questionnaire_create' %}">Nova Lista de Exercícios</a>
+ {% endif %}
+
 <h1 class="mb-5">Listas de Exercícios</h1>
 
 <table class="table">
