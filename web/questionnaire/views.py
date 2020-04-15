@@ -128,7 +128,7 @@ class SchoolClassList(LoginRequiredMixin, ListView):
     model = SchoolClass
 
     def get_queryset(self):
-        return self.user.teacher.get_classes()
+        return self.request.user.teacher.get_classes()
 
 
 @method_decorator([teacher_required], name='dispatch')
