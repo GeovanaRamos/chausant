@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import View
-from .models import Questionnaire, Quiz, Alternative, SchoolClass, Student, QuizResult
+from .models import Questionnaire, Quiz, Alternative, SchoolClass, User, QuizResult
 from .forms import QuestionnaireForm, QuizInlineFormSet, CustomUserCreationForm
 
 
@@ -115,3 +115,10 @@ class SignUp(CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('sign_in')
     template_name = 'registration/sign_up.html'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        if self.object.request_type == User.TEACHER:
+            self.object.is_active = False
+        self.object.save()
+        return super(SignUp, self).form_valid(form)

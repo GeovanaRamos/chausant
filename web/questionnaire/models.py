@@ -15,7 +15,6 @@ class User(AbstractUser):
     email = models.EmailField(verbose_name="Email", unique=True)
     full_name = models.CharField(verbose_name="Nome Completo", max_length=70)
     request_type = models.IntegerField(verbose_name="Tipo de Usuário", choices=USER_TYPES)
-    is_active = models.BooleanField(verbose_name="Está ativo?", default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
