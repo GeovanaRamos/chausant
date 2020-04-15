@@ -38,11 +38,11 @@
             {% endif %}
             {% endif %}
 
-               <form method="post">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <input type="submit" class="btn btn-primary" value="Salvar">
-  </form>
+            <form method="post" action="{% url 'sign_in' %}">
+              {% csrf_token %}
+              {{ form|crispy }}
+              <input type="submit" class="btn btn-primary" value="Salvar">
+            </form>
           </div>
         </div>
       </div>
