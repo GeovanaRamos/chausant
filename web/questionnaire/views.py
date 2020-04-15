@@ -110,6 +110,16 @@ class SchoolClassList(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('sign_in')
     model = SchoolClass
 
+    def get_queryset(self):
+        if hasattr(self.request.user, 'student'):
+            student = self.request.user.student
+            return student.school_classes.all()
+        elif hasattr(self.request.user, 'teacher'):
+            teacher = self.request.user.teacher
+            return SchoolClass.objects.filter(teacher=teacher)
+
+        return SchoolClass.objects.none()
+
 
 class SchoolClassDelete(LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('sign_in')
