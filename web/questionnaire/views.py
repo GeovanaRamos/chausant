@@ -8,6 +8,8 @@ from django.views.generic import View
 from .models import Questionnaire, Quiz, Alternative, SchoolClass, User, QuizResult
 from .forms import QuestionnaireForm, QuizInlineFormSet, CustomUserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .decorators import student_required, teacher_required
+from django.utils.decorators import method_decorator
 
 
 class QuestionnaireList(LoginRequiredMixin, ListView):
@@ -27,6 +29,7 @@ class QuestionnaireList(LoginRequiredMixin, ListView):
         return Questionnaire.objects.none()
 
 
+@method_decorator([teacher_required], name='dispatch')
 class QuestionnaireCreate(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('sign_in')
     model = Questionnaire
@@ -40,12 +43,14 @@ class QuestionnaireDetail(LoginRequiredMixin, DetailView):
     model = Questionnaire
 
 
+@method_decorator([teacher_required], name='dispatch')
 class QuestionnaireDelete(LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('sign_in')
     model = Questionnaire
     success_url = reverse_lazy('questionnaire_list')
 
 
+@method_decorator([teacher_required], name='dispatch')
 class QuizCreate(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('sign_in')
     model = Quiz
@@ -78,6 +83,7 @@ class QuizCreate(LoginRequiredMixin, CreateView):
         return super(QuizCreate, self).form_valid(form)
 
 
+@method_decorator([teacher_required], name='dispatch')
 class QuizList(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('sign_in')
     model = Quiz
@@ -86,6 +92,7 @@ class QuizList(LoginRequiredMixin, ListView):
         return Quiz.objects.filter(teacher=self.request.user.teacher)
 
 
+@method_decorator([student_required], name='dispatch')
 class QuizStudentList(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('sign_in')
     model = Quiz
@@ -102,12 +109,14 @@ class QuizStudentList(LoginRequiredMixin, ListView):
         return questionnaire.quizzes.all()
 
 
+@method_decorator([teacher_required], name='dispatch')
 class QuizDelete(LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('sign_in')
     model = Quiz
     success_url = reverse_lazy('quiz_list')
 
 
+@method_decorator([teacher_required], name='dispatch')
 class SchoolClassCreate(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('sign_in')
     model = SchoolClass
@@ -130,6 +139,7 @@ class SchoolClassList(LoginRequiredMixin, ListView):
         return SchoolClass.objects.none()
 
 
+@method_decorator([teacher_required], name='dispatch')
 class SchoolClassDelete(LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('sign_in')
     model = SchoolClass
