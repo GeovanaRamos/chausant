@@ -18,6 +18,12 @@
     <p><strong>Início:</strong> <a href="">{{ object.start_date|date:'d/m/Y' }}</a></p>
     <p><strong>Término:</strong> {{ object.due_date|date:'d/m/Y' }}</p>
     <p><strong>Número de Questões:</strong> {{ object.quizzes.all|length }}</p>
+    <p><strong>Turma(s):</strong>
+    {% for class in object.school_classes.all %}
+        {{ class }};
+    {% endfor %}
+    </p>
+
   </div>
 
   {% if user.teacher %}
