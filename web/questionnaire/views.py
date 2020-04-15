@@ -120,5 +120,6 @@ class SignUp(CreateView):
         self.object = form.save(commit=False)
         if self.object.request_type == User.TEACHER:
             self.object.is_active = False
+        self.object.username = self.object.full_name.split(' ')[0]
         self.object.save()
         return super(SignUp, self).form_valid(form)

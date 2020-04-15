@@ -2,18 +2,30 @@ from django import forms
 from django.forms import inlineformset_factory
 from .models import Questionnaire, Alternative, Quiz, User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import authenticate
 
 
 class CustomAuthenticationForm(AuthenticationForm):
     error_messages = {
         'invalid_login': "Nome e/ou senha incorretos. ",
-        'inactive': "Esta conta não foi validada.",
+        'inactive': "Esta conta não está validada.",
     }
 
     def __init__(self, *args, **kwargs):
         super(CustomAuthenticationForm, self).__init__(*args, **kwargs)
 
         self.fields['password'].label = "Senha"
+
+    def clean(self):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+
+        if username is not None and password:
+            self.user_cache = authenticate(self.request, username=username, password=password)
+            if self.user_cache is None:
+                raise self.get_invalid_login_error()
+            else:
+                self.confirm_login_allowed(self.user_cache)
 
 
 class CustomUserCreationForm(UserCreationForm):

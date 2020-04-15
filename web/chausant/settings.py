@@ -139,3 +139,5 @@ CRISPY_TEMPLATE_PACK="bootstrap3"
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'questionnaire.validators.CustomPasswordValidator'}
 ]
+
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.AllowAllUsersModelBackend']
