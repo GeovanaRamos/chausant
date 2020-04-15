@@ -19,12 +19,10 @@ class QuestionnaireList(LoginRequiredMixin, ListView):
     def get_queryset(self):
         if hasattr(self.request.user, 'student'):
             student = self.request.user.student
-            school_classes = student.school_classes.all()
-            return Questionnaire.objects.filter(school_classes__id__in=school_classes)
+            return Questionnaire.objects.filter(school_classes__id__in=student.get_classes())
         elif hasattr(self.request.user, 'teacher'):
             teacher = self.request.user.teacher
-            school_classes = SchoolClass.objects.filter(teacher=teacher)
-            return Questionnaire.objects.filter(school_classes__id__in=school_classes)
+            return Questionnaire.objects.filter(school_classes__id__in=teacher.get_classes())
 
         return Questionnaire.objects.none()
 
@@ -124,19 +122,13 @@ class SchoolClassCreate(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('schoolclass_list')
 
 
+@method_decorator([teacher_required], name='dispatch')
 class SchoolClassList(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('sign_in')
     model = SchoolClass
 
     def get_queryset(self):
-        if hasattr(self.request.user, 'student'):
-            student = self.request.user.student
-            return student.school_classes.all()
-        elif hasattr(self.request.user, 'teacher'):
-            teacher = self.request.user.teacher
-            return SchoolClass.objects.filter(teacher=teacher)
-
-        return SchoolClass.objects.none()
+        return self.user.teacher.get_classes()
 
 
 @method_decorator([teacher_required], name='dispatch')

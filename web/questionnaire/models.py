@@ -37,6 +37,9 @@ class Teacher(models.Model):
     def __str__(self):
         return self.user.full_name
 
+    def get_classes(self):
+        return SchoolClass.objects.filter(teacher=self)
+
 
 class Discipline(models.Model):
     name = models.CharField(verbose_name="Nome", max_length=50)
@@ -97,6 +100,9 @@ class Student(models.Model):
 
     def __str__(self):
         return self.user.full_name
+
+    def get_classes(self):
+        return self.school_classes.all()
 
 
 class Quiz(models.Model):
