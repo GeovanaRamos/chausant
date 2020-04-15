@@ -17,8 +17,8 @@ class QuestionnaireList(LoginRequiredMixin, ListView):
     def get_queryset(self):
         if hasattr(self.request.user, 'student'):
             student = self.request.user.student
-            school_classes = student.school_classes
-            return Questionnaire.objects.filter(school_class__id__in=school_classes)
+            school_classes = student.school_classes.all()
+            return Questionnaire.objects.filter(school_classes__id__in=school_classes)
         elif hasattr(self.request.user, 'teacher'):
             teacher = self.request.user.teacher
             school_classes = SchoolClass.objects.filter(teacher=teacher)
