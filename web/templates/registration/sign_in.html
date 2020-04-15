@@ -41,8 +41,10 @@
             <form method="post" action="{% url 'sign_in' %}">
               {% csrf_token %}
               {{ form|crispy }}
-              <input type="submit" class="btn btn-primary" value="Salvar">
+              <input type="submit" class="btn btn-primary col-md-12 mt-4" value="Entrar">
             </form>
+            <small class="col-md-12 text-center mt-3"><a href="{% url 'sign_up' %}">
+              Fazer Cadastro</a></small>
           </div>
         </div>
       </div>

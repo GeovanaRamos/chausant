@@ -30,6 +30,11 @@
           </div>
 
           <div class="myform form ">
+            <small id="teacher-warning" style="display:none;">
+              <p style="color:green; text-align: center;">
+                Atenção! Login para professores são liberados somente após validação do administrador.
+              </p>
+            </small>
             {% if next %}
             {% if user.is_authenticated %}
             <p>Você não tem permissão para acessar essa página.</p>
@@ -41,7 +46,7 @@
             <form method="post" action="{% url 'sign_up' %}">
               {% csrf_token %}
               {{ form|crispy }}
-              <input type="submit" class="btn btn-primary" value="Salvar">
+              <input type="submit" class="btn btn-primary col-md-12 mt-4" value="Enviar">
             </form>
           </div>
         </div>
@@ -49,6 +54,21 @@
     </div>
   </div>
 
+  <script type='text/javascript' src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script>
+$(document).ready(function(){
+
+    $("#id_request_type").change(function(){
+
+        if($(this).val() === "0"){
+            $("#teacher-warning").show();
+        }else{
+            $("#teacher-warning").hide();
+        }
+    });
+});
+</script>
 </body>
 
 
