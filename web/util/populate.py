@@ -126,7 +126,8 @@ def populate():
         year=2020,
         teacher=teacher_1,
         discipline=discipline_1,
-        school=school_1
+        school=school_1,
+        password='123'
     )
 
     school_class_2 = SchoolClass.objects.create(
@@ -134,7 +135,8 @@ def populate():
         year=2020,
         teacher=teacher_2,
         discipline=discipline_1,
-        school=school_1
+        school=school_1,
+        password='123'
     )
 
     school_class_3 = SchoolClass.objects.create(
@@ -142,7 +144,8 @@ def populate():
         year=2020,
         teacher=teacher_2,
         discipline=discipline_1,
-        school=school_1
+        school=school_1,
+        password='123'
     )
 
     print ('\n------------------------')
@@ -240,7 +243,6 @@ def populate():
         title='Lista 1',
         start_date=datetime.datetime.strptime("2020-01-01 15:26", "%Y-%m-%d %H:%M"),
         due_date=datetime.datetime.strptime("2020-12-01 15:26", "%Y-%m-%d %H:%M"),
-        is_suspended=False,
     )
     questionnaire_1.school_classes.add(school_class_2)
     questionnaire_1.save()
@@ -252,7 +254,6 @@ def populate():
         title='Lista 2',
         start_date=datetime.datetime.strptime("2020-01-01 15:26", "%Y-%m-%d %H:%M"),
         due_date=datetime.datetime.strptime("2020-12-01 15:26", "%Y-%m-%d %H:%M"),
-        is_suspended=False,
     )
     questionnaire_2.school_classes.add(school_class_3)
     questionnaire_2.save()
