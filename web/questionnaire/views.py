@@ -22,6 +22,14 @@ class QuestionnaireList(LoginRequiredMixin, ListView):
 
 
 @method_decorator([teacher_required], name='dispatch')
+class QuestionnaireUpdate(LoginRequiredMixin, UpdateView):
+    model = Questionnaire
+    fields = '__all__'
+    login_url = reverse_lazy('sign_in')
+    success_url = reverse_lazy('questionnaire_list')
+
+
+@method_decorator([teacher_required], name='dispatch')
 class QuestionnaireCreate(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('sign_in')
     model = Questionnaire

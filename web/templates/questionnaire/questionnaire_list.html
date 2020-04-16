@@ -23,32 +23,31 @@
 
   <tbody>
     {% for questionnaire in object_list %}
+    <tr>
+      <td>{{ questionnaire.title }}</td>
+      <td>{{ questionnaire.start_date|date:'d/m/Y' }}</td>
+      <td>{{ questionnaire.due_date|date:'d/m/Y' }}</td>
 
-    <td>{{ questionnaire.title }}</td>
-    <td>{{ questionnaire.start_date|date:'d/m/Y' }}</td>
-    <td>{{ questionnaire.due_date|date:'d/m/Y' }}</td>
-    {% if not questionnaire.is_supended %}
-    {% if questionnaire.is_active %}
-    <td>Em Andamento</td>
-    {% else %}
-    <td>Fechada</td>
-    {% endif %}
-    {% else %}
-    <td>Suspensa</td>
-    {% endif %}
-    <td class="text-center">
-      <a title="Detalhes" href="{% url 'questionnaire_detail' questionnaire.pk %}">
-        <i class="fas fa-info-circle"></i>
-      </a>
-      <a href="#" class="delete" title="Deletar" data-href="{% url 'questionnaire_delete' questionnaire.pk %}">
-        <i class="ml-2 fas fa-trash-alt"></i>
-      </a>
-      <a class="ml-2" title="Suspender" href="">
-        <i class="fas fa-ban"></i>
-      </a>
-    </td>
+      {% if questionnaire.is_active %}
+        <td>Em Andamento</td>
+      {% else %}
+        <td>Fechada</td>
+      {% endif %}
+
+      <td class="text-center">
+        <a title="Detalhes" href="{% url 'questionnaire_detail' questionnaire.pk %}">
+          <i class="fas fa-info-circle"></i>
+        </a>
+        {% if user.teacher %}
+        <a href="#" class="delete" title="Deletar" data-href="{% url 'questionnaire_delete' questionnaire.pk %}">
+          <i class="ml-2 fas fa-trash-alt"></i>
+        </a>
+        <a class="ml-2" title="Editar" href="{% url 'questionnaire_update' questionnaire.pk %}">
+          <i class="fas fa-pencil-alt"></i>
+        </a>
+        {% endif %}
+      </td>
     </tr>
-
     {% endfor %}
   </tbody>
 
