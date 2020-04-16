@@ -22,7 +22,7 @@ class SchoolClassForm(forms.ModelForm):
 
     class Meta:
         model = SchoolClass
-        fields = '__all__'
+        fields = ('school_level', 'school', 'year', 'discipline', 'password')
 
 
 class QuestionnaireForm(forms.ModelForm):

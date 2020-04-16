@@ -127,6 +127,12 @@ class SchoolClassCreate(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('schoolclass_list')
     template_name = 'questionnaire/schoolclass_form.html'
 
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.teacher = self.request.user.teacher
+        self.object.save()
+        return super(SchoolClassCreate, self).form_valid(form)
+
 
 class SchoolClassList(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('sign_in')
