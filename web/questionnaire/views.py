@@ -123,6 +123,7 @@ class SchoolClassCreate(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('sign_in')
     form_class = SchoolClassForm
     success_url = reverse_lazy('schoolclass_list')
+    template_name = 'questionnaire/schoolclass_form.html'
 
 
 @method_decorator([teacher_required], name='dispatch')
