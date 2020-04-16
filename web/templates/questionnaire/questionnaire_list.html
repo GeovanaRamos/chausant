@@ -37,10 +37,9 @@
     <td>Suspensa</td>
     {% endif %}
     <td class="text-center">
-      <a title="Relatório" href="{% url 'questionnaire_detail' questionnaire.pk %}">
+      <a title="Detalhes" href="{% url 'questionnaire_detail' questionnaire.pk %}">
         <i class="fas fa-info-circle"></i>
       </a>
-
       <a href="#" class="delete" title="Deletar" data-href="{% url 'questionnaire_delete' questionnaire.pk %}">
         <i class="ml-2 fas fa-trash-alt"></i>
       </a>
