@@ -1,6 +1,5 @@
 from django.urls import path
 from django.contrib.auth.views import LoginView
-from .forms import CustomAuthenticationForm
 from . import views
 
 urlpatterns = [
@@ -18,5 +17,5 @@ urlpatterns = [
     path("quizresult/create/", views.QuizResultCreate.as_view(), name="quizresult_create"),
     path('signup/', views.SignUp.as_view(), name='sign_up'),
     path('signin/', LoginView.as_view(
-        template_name='registration/sign_in.html', authentication_form=CustomAuthenticationForm), name='sign_in'),
+        template_name='registration/sign_in.html'), name='sign_in'),
 ]
