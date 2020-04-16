@@ -124,7 +124,6 @@ class Questionnaire(models.Model):
     school_classes = models.ManyToManyField(verbose_name="Turmas", to=SchoolClass)
     start_date = models.DateTimeField(verbose_name="Início", auto_now=False, auto_now_add=False)
     due_date = models.DateTimeField(verbose_name="Término", auto_now=False, auto_now_add=False)
-    is_suspended = models.BooleanField(default=False)
     quizzes = models.ManyToManyField(verbose_name="Questões", to=Quiz, blank=True)
 
     class Meta:
