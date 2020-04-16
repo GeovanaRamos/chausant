@@ -2,7 +2,12 @@
 {% load static %}
 
 {% block content %}
-<a class="btn btn-primary float-right" href="{% url 'schoolclass_create' %}">Nova Turma</a>
+{% if user.student %}
+<button class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">Entrar em uma Turma</button>
+{% elif user.teacher %}
+<a class="btn btn-primary float-right" href="{% url 'schoolclass_detail' %}">Nova Turma</a>
+{% endif %}
+
 <h1 class="mb-5">Minhas Turmas</h1>
 
 {% for school_class in object_list %}
@@ -33,11 +38,70 @@
 {% endfor %}
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Entrar em uma Turma</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <small id="warning" style="display:none;">
+          <p id="message" style="color:red; text-align: center;">
+          </p>
+        </small>
+        Digite o código da turma na qual deseja entrar:
+        <input id="pk" type="text" class="my-3" placeholder="Código"><br>
+        Digite a senha da turma na qual deseja entrar:
+        <input id="password" type="password" class="my-3" placeholder="Senha">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="send btn btn-primary">Entrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 {% endblock %}
 
 {% block js %}
 
 <script src="{% static 'core/js/delete.js' %}" crossorigin="anonymous"></script>
+<script>
+    $(".send").on("click", function(e) {
+        var pk = $("#pk").val();
+        var password = $("#password").val();
+
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'add_school_class_to_student'%}",
+            dataType: 'json',
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', pk: pk, password:password},
+            success: function (res, status) {
+              console.log("ok");
+            },
+            error: function (res) {
+                if(res.status == 406){
+                    $("#message").text('Turma não encontrada.');
+                    $("#warning").show();
+                } else if (res.status == 409){
+                    $("#message").text('Turma já adicionada.');
+                    $("#warning").show();
+                } else if (res.status == 401){
+                    $("#message").text('Senha incorreta');
+                    $("#warning").show();
+                }else {
+                    $("#message").text('Erro interno no servidor.');
+                    $("#warning").show();
+                }
+            }
+        });
+
+    });
+</script>
 
 {% endblock %}

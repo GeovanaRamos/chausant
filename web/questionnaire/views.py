@@ -126,13 +126,19 @@ class SchoolClassCreate(LoginRequiredMixin, CreateView):
     template_name = 'questionnaire/schoolclass_form.html'
 
 
-@method_decorator([teacher_required], name='dispatch')
 class SchoolClassList(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('sign_in')
     model = SchoolClass
 
     def get_queryset(self):
-        return self.request.user.teacher.get_classes()
+        if hasattr(self.request.user, 'student'):
+            student = self.request.user.student
+            return student.get_classes()
+        elif hasattr(self.request.user, 'teacher'):
+            teacher = self.request.user.teacher
+            return teacher.get_classes()
+
+        return Questionnaire.objects.none()
 
 
 @method_decorator([teacher_required], name='dispatch')
@@ -146,11 +152,8 @@ class QuizResultCreate(LoginRequiredMixin, View):
     login_url = reverse_lazy('sign_in')
 
     def post(self, request):
-        print(request.POST)
         questionnaire = request.POST.get('questionnaire')
         answers = json.loads(request.POST.get('answers'))
-        print(answers)
-        print(questionnaire)
         for key, value in answers.items():
             QuizResult.objects.create(
                 questionnaire=Questionnaire.objects.get(pk=questionnaire),
@@ -173,3 +176,25 @@ class SignUp(CreateView):
         self.object.username = self.object.full_name.split(' ')[0]
         self.object.save()
         return super(SignUp, self).form_valid(form)
+
+
+class AddSchoolClassToStudent(LoginRequiredMixin, View):
+    login_url = reverse_lazy('sign_in')
+
+    def post(self, request):
+        pk = request.POST.get('pk')
+        password = request.POST.get('password')
+
+        if not SchoolClass.objects.filter(pk=pk).exists():
+            return JsonResponse(data={"message": "Not found"}, status=406)
+
+        school_class = SchoolClass.objects.get(pk=pk)
+        student = self.request.user.student
+
+        if school_class in student.get_classes():
+            return JsonResponse(data={"message": "Turma já adicionada"}, status=409)
+        elif school_class.password == password:
+            student.school_classes.add(school_class)
+            return JsonResponse({"message":"done"})
+        else:
+            return JsonResponse(data={"message": "Incorrect password"}, status=401)
