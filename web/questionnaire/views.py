@@ -6,7 +6,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import View
 from .models import Questionnaire, Quiz, Alternative, SchoolClass, User, QuizResult
-from .forms import QuestionnaireForm, QuizInlineFormSet, CustomUserCreationForm
+from .forms import QuestionnaireForm, QuizInlineFormSet, CustomUserCreationForm, SchoolClassForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .decorators import student_required, teacher_required
 from django.utils.decorators import method_decorator
@@ -117,8 +117,7 @@ class QuizDelete(LoginRequiredMixin, DeleteView):
 @method_decorator([teacher_required], name='dispatch')
 class SchoolClassCreate(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('sign_in')
-    model = SchoolClass
-    fields = '__all__'
+    form_class = SchoolClassForm
     success_url = reverse_lazy('schoolclass_list')
 
 

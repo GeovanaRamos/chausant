@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import inlineformset_factory
-from .models import Questionnaire, Alternative, Quiz, User
+from .models import Questionnaire, Alternative, Quiz, User, SchoolClass
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate
 
@@ -51,6 +51,14 @@ class CustomUserCreationForm(UserCreationForm):
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError("Email já cadastrado.")
         return email
+
+
+class SchoolClassForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    class Meta:
+        model = SchoolClass
+        fields = '__all__'
 
 
 class QuestionnaireForm(forms.ModelForm):

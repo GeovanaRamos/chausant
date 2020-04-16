@@ -80,6 +80,7 @@ class SchoolClass(models.Model):
     year = models.IntegerField(verbose_name="Ano de Realização")
     teacher = models.ForeignKey(verbose_name="Professor", to=Teacher, on_delete=models.CASCADE)
     discipline = models.ForeignKey(verbose_name="Disciplina", to=Discipline, on_delete=models.CASCADE)
+    password = models.CharField(max_length=50)
 
     class Meta:
         verbose_name = "Turma"
