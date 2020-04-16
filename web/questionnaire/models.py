@@ -26,6 +26,14 @@ class User(AbstractUser):
     def __str__(self):
         return self.full_name
 
+    def get_classes(self):
+        if hasattr(self, 'student'):
+            return self.student.get_classes()
+        elif hasattr(self, 'teacher'):
+            return self.teacher.get_classes()
+        else:
+            return models.Model.objects.none()
+
 
 class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

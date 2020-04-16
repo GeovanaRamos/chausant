@@ -25,18 +25,13 @@
     <div class="row">
       <label class="col"> <strong>Turmas: </strong> </label>
       <div class="w-100"></div>
-      {% if user.student %}
-        {% if student.get_classes %}
-        <div class="col alert alert-dark mx-3" role="alert">{{ student.get_classes }}</div>
-        {% else%}
-      <div class="col alert alert-dark mx-3" role="alert"><small>Clique em "Turmas" para entrar em uma turma</small></div>
-        {% endif %}
-      {% elif user.teacher %}
-      {% if teacher.get_classes %}
-        <div class="col alert alert-dark mx-3" role="alert">{{ teacher.get_classes }}</div>
-        {% else%}
-      <div class="col alert alert-dark mx-3" role="alert"><small>Clique em "Turmas" para criar uma turma</small></div>
-        {% endif %}
+
+      {% if user.get_classes %}
+        {% for class in user.get_classes %}
+          <div class="col alert alert-dark mx-3" role="alert">{{ class }}</div>
+        {% endfor %}
+      {% else%}
+        <div class="col alert alert-dark mx-3" role="alert"><small>Clique em "Turmas" para entrar em uma turma</small></div>
       {% endif %}
 
     </div>

@@ -17,14 +17,8 @@ class QuestionnaireList(LoginRequiredMixin, ListView):
     model = Questionnaire
 
     def get_queryset(self):
-        if hasattr(self.request.user, 'student'):
-            student = self.request.user.student
-            return Questionnaire.objects.filter(school_classes__id__in=student.get_classes())
-        elif hasattr(self.request.user, 'teacher'):
-            teacher = self.request.user.teacher
-            return Questionnaire.objects.filter(school_classes__id__in=teacher.get_classes())
-
-        return Questionnaire.objects.none()
+        return Questionnaire.objects.filter(
+            school_classes__id__in=self.request.user.get_classes())
 
 
 @method_decorator([teacher_required], name='dispatch')
@@ -131,14 +125,7 @@ class SchoolClassList(LoginRequiredMixin, ListView):
     model = SchoolClass
 
     def get_queryset(self):
-        if hasattr(self.request.user, 'student'):
-            student = self.request.user.student
-            return student.get_classes()
-        elif hasattr(self.request.user, 'teacher'):
-            teacher = self.request.user.teacher
-            return teacher.get_classes()
-
-        return Questionnaire.objects.none()
+        return self.request.user.get_classes()
 
 
 @method_decorator([teacher_required], name='dispatch')
