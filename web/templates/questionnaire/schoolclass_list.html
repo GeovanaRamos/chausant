@@ -5,7 +5,7 @@
 {% if user.student %}
 <button class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">Entrar em uma Turma</button>
 {% elif user.teacher %}
-<a class="btn btn-primary float-right" href="{% url 'schoolclass_detail' %}">Nova Turma</a>
+<a class="btn btn-primary float-right" href="{% url 'schoolclass_create' %}">Nova Turma</a>
 {% endif %}
 
 <h1 class="mb-5">Minhas Turmas</h1>
@@ -24,9 +24,17 @@
       </p>
       <ul class="list-inline">
         <li class="list-inline-item">
-          <a href="#" class="delete" title="Deletar Turma" data-href="{% url 'schoolclass_delete' school_class.pk %}">
-            <i class="fas fa-trash-alt fa-lg"></i>
-          </a>
+          {% if user.teacher %}
+            <small id="hidden-text">
+              <p>
+                <strong>Código: </strong>{{school_class.pk}}<br>
+                <strong>Senha: </strong>{{school_class.password}}
+              </p>
+            </small>
+            <a href="#" class="delete" title="Deletar Turma" data-href="{% url 'schoolclass_delete' school_class.pk %}">
+              <i class="fas fa-trash-alt fa-lg"></i>
+            </a>
+          {% endif %}
         </li>
       </ul>
     </div>
@@ -72,6 +80,10 @@
 
 <script src="{% static 'core/js/delete.js' %}" crossorigin="anonymous"></script>
 <script>
+
+
+$(document).ready(function () {
+
     $(".send").on("click", function(e) {
         var pk = $("#pk").val();
         var password = $("#password").val();
@@ -102,6 +114,9 @@
         });
 
     });
+});
+
+
 </script>
 
 {% endblock %}
