@@ -95,6 +95,7 @@ $(document).ready(function () {
             data: {'csrfmiddlewaretoken': '{{ csrf_token }}', pk: pk, password:password},
             success: function (res, status) {
               console.log("ok");
+              window.location.reload();
             },
             error: function (res) {
                 if(res.status == 406){
