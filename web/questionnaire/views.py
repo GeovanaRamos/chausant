@@ -33,7 +33,11 @@ class QuestionnaireCreate(LoginRequiredMixin, CreateView):
     model = Questionnaire
     form_class = QuestionnaireForm
     success_url = reverse_lazy('questionnaire_list')
-    # TODO correct date and time input
+
+    def get_form_kwargs(self):
+        kwargs = super(QuestionnaireCreate, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
 
 
 class QuestionnaireDetail(LoginRequiredMixin, DetailView):

@@ -30,6 +30,12 @@ class QuestionnaireForm(forms.ModelForm):
         model = Questionnaire
         fields = ('title', 'school_classes', 'start_date', 'due_date', 'quizzes')
 
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop("user")
+        super(QuestionnaireForm, self).__init__(*args, **kwargs)
+        self.fields['quizzes'].queryset = Quiz.objects.filter(teacher=self.user.teacher)
+        self.fields['school_classes'].queryset = self.user.teacher.get_classes()
+
 
 class AlternativeForm(forms.ModelForm):
     class Meta:
