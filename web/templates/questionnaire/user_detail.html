@@ -1,0 +1,48 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+<div class="container">
+  <a class="btn btn-primary float-right" href="{% url 'user_update' user.pk %}" role="button">Editar Dados</a>
+  {% if user.student %}
+          <h1 class="text-center">Bem-vindo, Aluno!</h1>
+        {% elif user.teacher %}
+          <h1 class="text-center">Bem-vindo, Professor!</h1>
+  {% endif %}
+
+
+
+    <div class="row">
+      <label class="col"> <strong>Nome Completo: </strong> </label>
+      <div class="w-100"></div>
+      <div class="col alert alert-dark mx-3" role="alert">{{ user.full_name }}</div>
+    </div>
+    <div class="row">
+      <label class="col"> <strong>Email: </strong> </label>
+      <div class="w-100"></div>
+      <div class="col alert alert-dark mx-3" role="alert">{{ user.email }}</div>
+    </div>
+    <div class="row">
+      <label class="col"> <strong>Turmas: </strong> </label>
+      <div class="w-100"></div>
+      {% if user.student %}
+        {% if student.get_classes %}
+        <div class="col alert alert-dark mx-3" role="alert">{{ student.get_classes }}</div>
+        {% else%}
+      <div class="col alert alert-dark mx-3" role="alert"><small>Clique em "Turmas" para entrar em uma turma</small></div>
+        {% endif %}
+      {% elif user.teacher %}
+      {% if teacher.get_classes %}
+        <div class="col alert alert-dark mx-3" role="alert">{{ teacher.get_classes }}</div>
+        {% else%}
+      <div class="col alert alert-dark mx-3" role="alert"><small>Clique em "Turmas" para criar uma turma</small></div>
+        {% endif %}
+      {% endif %}
+
+    </div>
+
+
+
+
+
+{% endblock content %}

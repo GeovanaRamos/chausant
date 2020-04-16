@@ -198,3 +198,14 @@ class AddSchoolClassToStudent(LoginRequiredMixin, View):
             return JsonResponse({"message":"done"})
         else:
             return JsonResponse(data={"message": "Incorrect password"}, status=401)
+
+
+class UserDetail(LoginRequiredMixin, DetailView):
+    model = User
+    login_url = reverse_lazy('sign_in')
+
+
+class UserUpdate(LoginRequiredMixin, UpdateView):
+    model = User
+    fields = ('full_name', 'email')
+    login_url = reverse_lazy('sign_in')

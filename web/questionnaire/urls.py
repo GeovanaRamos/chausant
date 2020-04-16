@@ -18,4 +18,6 @@ urlpatterns = [
     path("quizresult/create/", views.QuizResultCreate.as_view(), name="quizresult_create"),
     path('signup/', views.SignUp.as_view(), name='sign_up'),
     path('signin/', LoginView.as_view(template_name='registration/sign_in.html'), name='sign_in'),
+    path('profile/<pk>', views.UserDetail.as_view(), name="user_detail"),
+    path('profile/update/<pk>', views.UserUpdate.as_view(), name="user_update")
 ]
