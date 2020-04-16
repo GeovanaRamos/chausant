@@ -33,14 +33,13 @@
           <li>
             <a href="{% url 'questionnaire_list' %}"><span class="fas fa-list-ol"></span>Listas</a>
           </li>
+          {% if user.teacher %}
           <li>
             <a href="{% url 'quiz_list' %}"><span class="fas fa-question-circle"></span>Questões</a>
           </li>
+          {% endif %}
           <li>
             <a href="{% url 'schoolclass_list' %}"><span class="fas fa-chalkboard-teacher"></span>Turmas</a>
-          </li>
-          <li>
-            <a href=""><span class="fas fa-user-graduate"></span> Alunos</a>
           </li>
         </ul>
       </div>
