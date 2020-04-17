@@ -52,9 +52,16 @@
             <i class="fas fa-check-square"></i>
           </a>
         {% endif %}
-        <a class="ml-2" title="Editar" href="{% url 'questionnaireconclusion_list' questionnaire.pk %}">
-          <i class="fas fa-poll"></i>
-        </a>
+
+        {% if user.student and questionnaire.concluded %}
+          <a class="ml-2" title="Resultados" href="{% url 'quizresult_list' questionnaire.pk request.user.student.pk %}">
+            <i class="fas fa-poll"></i>
+          </a>
+        {% elif user.teacher %}
+            <a class="ml-2" title="Resultados" href="{% url 'questionnaireconclusion_list' questionnaire.pk %}">
+            <i class="fas fa-poll"></i>
+          </a>
+        {% endif %}
 
       </td>
     </tr>
