@@ -52,6 +52,10 @@
             <i class="fas fa-check-square"></i>
           </a>
         {% endif %}
+        <a class="ml-2" title="Editar" href="{% url 'questionnaireconclusion_list' questionnaire.pk %}">
+          <i class="fas fa-poll"></i>
+        </a>
+
       </td>
     </tr>
     {% endfor %}

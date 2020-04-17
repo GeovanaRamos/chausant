@@ -1,0 +1,43 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1 class="mb-5">Resultados</h1>
+
+<table class="table">
+
+  <thead>
+    <tr>
+      <th>Nome Completo</th>
+      <th>Email</th>
+      <th>Data de Conclusão</th>
+      <th>Percentual de Acerto</th>
+      <th class="text-center">Resultados</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for conclusion in object_list %}
+    <tr>
+      <td>{{ conclusion.student.user.full_name }}</td>
+      <td>{{ conclusion.student.user.email }}</td>
+      <td>{{ conclusion.concluded_at }}</td>
+      <td>{{ conclusion.get_hit_percentage }}</td>
+      <td class="text-center">
+        <a title="Editar" href="">
+          <i class="fas fa-poll"></i>
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+
+</table>
+{% endblock content %}
+
+{% block js %}
+
+<script src="{% static 'core/js/delete.js' %}" crossorigin="anonymous"></script>
+
+{% endblock %}

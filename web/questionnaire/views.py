@@ -239,3 +239,23 @@ class SchoolClassStudentList(LoginRequiredMixin, ListView):
     def get_queryset(self):
         school_class = SchoolClass.objects.get(pk=self.kwargs.get('school_class_pk'))
         return school_class.student_set.all().order_by('user__full_name')
+
+
+@method_decorator([teacher_required], name='dispatch')
+class QuestionnaireConclusionList(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('sign_in')
+    model = QuestionnaireConclusion
+
+    def get_queryset(self):
+        return QuestionnaireConclusion.objects.filter(questionnaire=self.kwargs.get('questionnaire_pk'))
+
+
+class QuizResultList(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('sign_in')
+    model = QuizResult
+
+    def get_queryset(self):
+        questionnaire = Questionnaire.objects.get(pk=self.kwargs.get('questionnaire_pk'))
+        student = Student.objects.get(pk=self.kwargs.get('student_pk'))
+
+        return QuizResult.objects.filter(questionnaire=questionnaire, student=student)
