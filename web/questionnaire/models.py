@@ -163,11 +163,6 @@ class Questionnaire(models.Model):
 
         return False
 
-    def get_concluding_students(self):
-        questionnaire_conclusions = QuestionnaireConclusion.objects.filter(questionnaire=self)
-        students = Student.objects.filter(pk__in=questionnaire_conclusions.values_list('student', flat=True))
-        return students
-
 
 class Alternative(models.Model):
     text = models.CharField(verbose_name="Texto", max_length=500)
@@ -205,7 +200,8 @@ class QuestionnaireConclusion(models.Model):
                                         auto_now=False, auto_now_add=False, editable=False)
 
     def get_hit_percentage(self):
-        count, correct = 0
+        count = 0
+        correct = 0
 
         for quiz in self.questionnaire.quizzes.all():
             if QuizResult.objects.get(quiz=quiz, student=self.student,
