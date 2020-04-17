@@ -1,0 +1,37 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1 class="mb-5">Resultado Individual</h1>
+
+<table class="table">
+
+  <thead>
+    <tr>
+      <th>Questão</th>
+      <th>Resultado</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for result in object_list %}
+    <tr>
+      <td>{{ result.quiz.title }}</td>
+      {% if result.is_correct %}
+        <td><i class="fas fa-check" style="color: var(--primary);"></i></td>
+      {% else %}
+        <td><i class="fas fa-times ml-1"></i></td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+
+</table>
+{% endblock content %}
+
+{% block js %}
+
+<script src="{% static 'core/js/delete.js' %}" crossorigin="anonymous"></script>
+
+{% endblock %}
