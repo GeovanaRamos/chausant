@@ -20,5 +20,6 @@ urlpatterns = [
     path('signup', views.SignUp.as_view(), name='sign_up'),
     path('signin', LoginView.as_view(template_name='registration/sign_in.html'), name='sign_in'),
     path('profile/<pk>', views.UserDetail.as_view(), name="user_detail"),
-    path('profile/update/<pk>', views.UserUpdate.as_view(), name="user_update")
+    path('profile/update/<pk>', views.UserUpdate.as_view(), name="user_update"),
+    path('students/<school_class_pk>', views.SchoolClassStudentList.as_view(), name="student_list")
 ]

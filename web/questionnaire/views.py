@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import View
-from .models import Questionnaire, Quiz, Alternative, SchoolClass, User, QuizResult
+from .models import Questionnaire, Quiz, Alternative, SchoolClass, User, QuizResult, Student
 from .forms import QuestionnaireForm, QuizInlineFormSet, CustomUserCreationForm, SchoolClassForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .decorators import student_required, teacher_required
@@ -219,3 +219,13 @@ class UserUpdate(LoginRequiredMixin, UpdateView):
     model = User
     fields = ('full_name', 'email')
     login_url = reverse_lazy('sign_in')
+
+
+@method_decorator([teacher_required], name='dispatch')
+class SchoolClassStudentList(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('sign_in')
+    model = Student
+
+    def get_queryset(self):
+        school_class = SchoolClass.objects.get(pk=self.kwargs.get('school_class_pk'))
+        return school_class.student_set.all().order_by('user__full_name')

@@ -31,8 +31,11 @@
                 <strong>Senha: </strong>{{school_class.password}}
               </p>
             </small>
+            <a title="Ver alunos" href="{% url 'student_list' school_class.pk %}">
+              <i class="fas fa-user-graduate fa-lg mr-2"></i>
+            </a>
             <a href="#" class="delete" title="Deletar Turma" data-href="{% url 'schoolclass_delete' school_class.pk %}">
-              <i class="fas fa-trash-alt fa-lg"></i>
+              <i class="fas fa-trash-alt fa-lg ml-2"></i>
             </a>
           {% endif %}
         </li>
