@@ -18,7 +18,7 @@ def create_super_user(username, email):
         u = User.objects.create_superuser(username,
                                           email,
                                           password,
-                                          request_type=1,
+                                          request_type=0,
                                           is_active=True)
 
         return u
@@ -40,7 +40,7 @@ def create_user(name, username, email):
             username=username,
             email=email,
             password=password,
-            request_type=2,
+            request_type=1,
             is_active=True
         )
 
@@ -49,35 +49,13 @@ def create_user(name, username, email):
     except IntegrityError:
         raise ValidationError("An error occurred. Stopping the script")
 
-def create_teacher(user):
-    try:
-        teacher = Teacher.objects.create(
-            user=user
-        )
-        return teacher
-
-    except IntegrityError:
-        raise ValidationError("An error occurred. Stopping the script")
-
-
-def create_student(user, school_classes):
-    try:
-        student = Student.objects.create(user=user)
-        for sc in school_classes:
-            student.school_classes.add(sc)
-        student.save()
-        return student
-    except IntegrityError:
-        raise ValidationError("An error occurred. Stopping the script")
-
-
-
 def populate():
     print ('\n----------------------')
     print ('Populating Database...')
     print ('----------------------\n')
 
     user_1 = create_super_user('admin', 'admin@admin.com')
+    teacher_1 = user_1.teacher
 
     print ('\n------------------------')
     print ('Creating Disciplines...')
@@ -90,12 +68,6 @@ def populate():
     print ('------------------------\n')
 
     school_1 = School.objects.create(name='CCI')
-
-    print ('\n------------------------')
-    print ('Creating Teachers...')
-    print ('------------------------\n')
-
-    teacher_1 = create_teacher(user_1)
 
 
     print ('\n------------------------')
@@ -127,7 +99,8 @@ def populate():
 
     user_2 = create_user('Aninha', 'aninha' ,'aninha@email.com')
 
-    student_1 = create_student(user_2, [school_class_1])
+    student_1 = user_2.student
+    student_1.school_classes.add(school_class_1)
     
     print ('\n------------------------')
     print ('Creating Quiz ...')
