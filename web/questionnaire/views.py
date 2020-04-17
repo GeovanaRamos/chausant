@@ -5,7 +5,8 @@ from django.http import JsonResponse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import View
-from .models import Questionnaire, Quiz, Alternative, SchoolClass, User, QuizResult, Student
+from .models import Questionnaire, Quiz, Alternative, SchoolClass
+from .models import User, QuizResult, Student, QuestionnaireConclusion
 from .forms import QuestionnaireForm, QuizInlineFormSet, CustomUserCreationForm, SchoolClassForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .decorators import student_required, teacher_required
@@ -162,15 +163,24 @@ class QuizResultCreate(LoginRequiredMixin, View):
     login_url = reverse_lazy('sign_in')
 
     def post(self, request):
-        questionnaire = request.POST.get('questionnaire')
+        questionnaire_pk = request.POST.get('questionnaire')
         answers = json.loads(request.POST.get('answers'))
+
+        questionnaire = Questionnaire.objects.get(pk=questionnaire_pk)
+        student = request.user.student
+
         for key, value in answers.items():
             QuizResult.objects.create(
-                questionnaire=Questionnaire.objects.get(pk=questionnaire),
-                student=request.user.student,
+                questionnaire=questionnaire,
+                student=student,
                 quiz=Quiz.objects.get(pk=key),
                 is_correct=Alternative.objects.get(pk=value).is_answer
             )
+
+        QuestionnaireConclusion.objects.create(
+            student=student,
+            questionnaire=questionnaire
+        )
         return JsonResponse({"message":"done"})
 
 

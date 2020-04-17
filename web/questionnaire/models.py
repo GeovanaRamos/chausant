@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils import timezone
 
 
 class User(AbstractUser):
@@ -142,20 +143,23 @@ class Questionnaire(models.Model):
         return self.title
 
     def is_active(self):
-        from django.utils import timezone
         now = timezone.now()
         return self.start_date <= now <= self.due_date
 
     def student_has_concluded(self, student):
-        for quiz in self.quizzes.all():
-            if not QuizResult.objects.filter(questionnaire=self, quiz=quiz, student=student).exists():
-                return False
+        if QuestionnaireConclusion.objects.filter(questionnaire=self, student=student).exists():
+            return True
 
-        return True
+        return False
+
+    def get_concluding_students(self):
+        questionnaire_conclusions = QuestionnaireConclusion.objects.filter(questionnaire=self)
+        students = Student.objects.filter(pk__in=questionnaire_conclusions.values_list('student', flat=True))
+        return students
 
 
 class Alternative(models.Model):
-    text = models.CharField(verbose_name="Texto", max_length=20)
+    text = models.CharField(verbose_name="Texto", max_length=500)
     is_answer = models.BooleanField(verbose_name="É a correta?", default=False)
     quiz = models.ForeignKey(verbose_name="Perguntas", to=Quiz, on_delete=models.CASCADE)
     letter = models.CharField(max_length=1)
@@ -181,3 +185,28 @@ class QuizResult(models.Model):
 
     def __str__(self):
         return self.questionnaire + " " + "Nota " + self.quiz.title + " " + self.student
+
+
+class QuestionnaireConclusion(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
+    concluded_at = models.DateTimeField(verbose_name="Data de Conclusão da Lista",
+                                        auto_now=False, auto_now_add=False, editable=False)
+
+    def get_hit_percentage(self):
+        count, correct = 0
+
+        for quiz in self.questionnaire.quizzes.all():
+            if QuizResult.objects.get(quiz=quiz, student=self.student,
+                                      questionnaire=self.questionnaire).is_correct:
+                correct += 1
+
+            count += 1
+
+        return correct * 100 / count
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.concluded_at = timezone.now()
+        return super(QuestionnaireConclusion, self).save(*args, **kwargs)
+
