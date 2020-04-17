@@ -1,0 +1,33 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1 class="mb-5">Alunos</h1>
+
+<table class="table">
+
+  <thead>
+    <tr>
+      <th>Nome Completo</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for student in object_list %}
+    <tr>
+      <td>{{ student.user.full_name }}</td>
+      <td>{{ student.user.email }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+
+</table>
+{% endblock content %}
+
+{% block js %}
+
+<script src="{% static 'core/js/delete.js' %}" crossorigin="anonymous"></script>
+
+{% endblock %}
