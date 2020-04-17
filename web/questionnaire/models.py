@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class User(AbstractUser):
@@ -34,6 +36,15 @@ class User(AbstractUser):
             return self.teacher.get_classes()
         else:
             return SchoolClass.objects.none()
+
+
+@receiver(post_save, sender=User)
+def update_stock(sender, instance, created, **kwargs):
+    if created:
+        if instance.request_type == User.TEACHER:
+            Teacher.objects.create(user=instance)
+        elif instance.request_type == User.STUDENT:
+            Student.objects.create(user=instance)
 
 
 class Teacher(models.Model):
