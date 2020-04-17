@@ -77,7 +77,7 @@ def populate():
     print ('Populating Database...')
     print ('----------------------\n')
 
-    create_super_user('admin', 'admin@admin.com')
+    user_1 = create_super_user('admin', 'admin@admin.com')
 
     print ('\n------------------------')
     print ('Creating Disciplines...')
@@ -95,11 +95,7 @@ def populate():
     print ('Creating Teachers...')
     print ('------------------------\n')
 
-    user_1 = create_user('Ana', 'ana' ,'ana@email.com')
-    user_2 = create_user('João', 'joao' ,'joao@email.com')
-
     teacher_1 = create_teacher(user_1)
-    teacher_2 = create_teacher(user_2)
 
 
     print ('\n------------------------')
@@ -107,14 +103,9 @@ def populate():
     print ('------------------------\n')
 
     school_level_1 = SchoolLevel.objects.create(
-        name='9 ano EF'
-    )
-    school_level_2 = SchoolLevel.objects.create(
         name='1 série EM'
     )
-    school_level_3 = SchoolLevel.objects.create(
-        name='2 série EM'
-    )
+
 
     print ('\n------------------------')
     print ('Creating School Classes...')
@@ -130,33 +121,13 @@ def populate():
         password='123'
     )
 
-    school_class_2 = SchoolClass.objects.create(
-        school_level=school_level_2,
-        year=2020,
-        teacher=teacher_2,
-        discipline=discipline_1,
-        school=school_1,
-        password='123'
-    )
-
-    school_class_3 = SchoolClass.objects.create(
-        school_level=school_level_3,
-        year=2020,
-        teacher=teacher_2,
-        discipline=discipline_1,
-        school=school_1,
-        password='123'
-    )
-
     print ('\n------------------------')
     print ('Creating Students ...')
     print ('------------------------\n')
 
-    user_3 = create_user('Aninha', 'aninha' ,'aninha@email.com')
-    user_4 = create_user('Joãozinho', 'joaozinho' ,'joaozinho@email.com')
+    user_2 = create_user('Aninha', 'aninha' ,'aninha@email.com')
 
-    student_1 = create_student(user_3, [school_class_1, school_class_2])
-    student_2 = create_student(user_4, [school_class_2, school_class_3])
+    student_1 = create_student(user_2, [school_class_1])
     
     print ('\n------------------------')
     print ('Creating Quiz ...')
@@ -164,43 +135,56 @@ def populate():
 
     quiz_1 = Quiz.objects.create(
         title='Matriz',
-        question='Qual letra?',
+        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eget ligula eu lectus '
+                 'lobortis condimentum. Aliquam nonummy auctor massa. Pellentesque habitant morbi tristique '
+                 'senectus et netus et malesuada fames ac turpis egestas. Nulla at risus. '
+                 'Quisque purus magna, auctor et, sagittis ac, posuere eu, lectus. Nam mattis, felis ut '
+                 'adipiscing.',
         teacher=teacher_1
     )
     
     quiz_2 = Quiz.objects.create(
         title='Algebra',
-        question='Qual alternativa?',
+        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eget ligula eu lectus '
+                 'lobortis condimentum. Aliquam nonummy auctor massa. Pellentesque habitant morbi tristique '
+                 'senectus et netus et malesuada fames ac turpis egestas. Nulla at risus. '
+                 'Quisque purus magna, auctor et, sagittis ac, posuere eu, lectus. Nam mattis, felis ut '
+                 'adipiscing.',
         teacher=teacher_1
     )
+
 
     print ('\n------------------------')
     print ('Creating Alternatives ...')
     print ('------------------------\n')
 
     alternative_1 = Alternative.objects.create(
-        text='É A',
+        text='Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod '
+             'tempor incididunt ut labore et d',
         is_answer=False,
         quiz=quiz_1,
         letter='A',
     )
 
     alternative_2 = Alternative.objects.create(
-        text='É B',
+        text='Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod '
+             'tempor incididunt ut labore et d',
         is_answer=False,
         quiz=quiz_1,
         letter='B',
     )
 
     alternative_3 = Alternative.objects.create(
-        text='É C',
+        text='Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod '
+             'tempor incididunt ut labore et d',
         is_answer=False,
         quiz=quiz_1,
         letter='C',
     )
 
     alternative_4 = Alternative.objects.create(
-        text='É D',
+        text='Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod '
+             'tempor incididunt ut labore et d',
         is_answer=True,
         quiz=quiz_1,
         letter='D',
@@ -208,28 +192,32 @@ def populate():
 
 
     alternative_5 = Alternative.objects.create(
-        text='É A',
+        text='Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod '
+             'tempor incididunt ut labore et d',
         is_answer=False,
         quiz=quiz_2,
         letter='A',
     )
 
     alternative_6 = Alternative.objects.create(
-        text='É B',
+        text='Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod '
+             'tempor incididunt ut labore et d',
         is_answer=False,
         quiz=quiz_2,
         letter='B',
     )
 
     alternative_7 = Alternative.objects.create(
-        text='É C',
+        text='Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod '
+             'tempor incididunt ut labore et d',
         is_answer=True,
         quiz=quiz_2,
         letter='C',
     )
 
     alternative_8 = Alternative.objects.create(
-        text='É D',
+        text='Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod '
+             'tempor incididunt ut labore et d',
         is_answer=False,
         quiz=quiz_2,
         letter='D',
@@ -244,7 +232,7 @@ def populate():
         start_date=datetime.datetime.strptime("2020-01-01 15:26", "%Y-%m-%d %H:%M"),
         due_date=datetime.datetime.strptime("2020-12-01 15:26", "%Y-%m-%d %H:%M"),
     )
-    questionnaire_1.school_classes.add(school_class_2)
+    questionnaire_1.school_classes.add(school_class_1)
     questionnaire_1.save()
     questionnaire_1.quizzes.add(quiz_1)
     questionnaire_1.quizzes.add(quiz_2)
@@ -255,34 +243,13 @@ def populate():
         start_date=datetime.datetime.strptime("2020-01-01 15:26", "%Y-%m-%d %H:%M"),
         due_date=datetime.datetime.strptime("2020-12-01 15:26", "%Y-%m-%d %H:%M"),
     )
-    questionnaire_2.school_classes.add(school_class_3)
+    questionnaire_2.school_classes.add(school_class_1)
     questionnaire_2.save()
     questionnaire_2.quizzes.add(quiz_1)
     questionnaire_2.quizzes.add(quiz_2)
     questionnaire_2.save()
 
 
-    print ('\n------------------------')
-    print ('Creating QuizResult ...')
-    print ('------------------------\n')
-
-    quiz_result_1 = QuizResult.objects.create(
-        is_correct=True,
-        quiz=quiz_1,
-        student=student_1,
-        questionnaire=questionnaire_1
-    )
-
-    quiz_result_2 = QuizResult.objects.create(
-        is_correct=False,
-        quiz=quiz_2,
-        student=student_2,
-        questionnaire=questionnaire_2
-    )
-
-    print ('\n------------------------------\n')
-    print ('Database populated with success')
-    print ('------------------------------\n')
 
 
 import django
@@ -298,7 +265,6 @@ from questionnaire.models import Student
 from questionnaire.models import Questionnaire
 from questionnaire.models import Quiz
 from questionnaire.models import Alternative
-from questionnaire.models import QuizResult
 from questionnaire.models import User
 from questionnaire.models import School
 
