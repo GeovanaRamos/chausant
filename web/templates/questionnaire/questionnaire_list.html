@@ -28,7 +28,9 @@
       <td>{{ questionnaire.start_date|date:'d/m/Y' }}</td>
       <td>{{ questionnaire.due_date|date:'d/m/Y' }}</td>
 
-      {% if questionnaire.is_active %}
+      {% if user.student and questionnaire.concluded %}
+        <td>Concluída</td>
+      {% elif questionnaire.is_active %}
         <td>Em Andamento</td>
       {% else %}
         <td>Fechada</td>
@@ -45,6 +47,10 @@
         <a class="ml-2" title="Editar" href="{% url 'questionnaire_update' questionnaire.pk %}">
           <i class="fas fa-pencil-alt"></i>
         </a>
+        {% elif user.student and not questionnaire.concluded%}
+          <a class="ml-2" title="Responder" href="{% url 'quiz_student_list' questionnaire.pk %}">
+            <i class="fas fa-check-square"></i>
+          </a>
         {% endif %}
       </td>
     </tr>

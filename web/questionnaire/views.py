@@ -20,6 +20,15 @@ class QuestionnaireList(LoginRequiredMixin, ListView):
         return Questionnaire.objects.filter(
             school_classes__id__in=self.request.user.get_classes())
 
+    def get_context_data(self, **kwargs):
+        data = super(QuestionnaireList, self).get_context_data(**kwargs)
+
+        if hasattr(self.request.user, 'student'):
+            for questionnaire in data['object_list']:
+                questionnaire.concluded = questionnaire.student_has_concluded(self.request.user.student)
+
+        return data
+
 
 @method_decorator([teacher_required], name='dispatch')
 class QuestionnaireUpdate(LoginRequiredMixin, UpdateView):

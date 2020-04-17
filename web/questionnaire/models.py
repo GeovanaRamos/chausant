@@ -32,7 +32,7 @@ class User(AbstractUser):
         elif hasattr(self, 'teacher'):
             return self.teacher.get_classes()
         else:
-            return models.Model.objects.none()
+            return SchoolClass.objects.none()
 
 
 class Teacher(models.Model):
@@ -146,6 +146,13 @@ class Questionnaire(models.Model):
         now = timezone.now()
         return self.start_date <= now <= self.due_date
 
+    def student_has_concluded(self, student):
+        for quiz in self.quizzes.all():
+            if not QuizResult.objects.filter(questionnaire=self, quiz=quiz, student=student).exists():
+                return False
+
+        return True
+
 
 class Alternative(models.Model):
     text = models.CharField(verbose_name="Texto", max_length=20)
@@ -173,4 +180,4 @@ class QuizResult(models.Model):
         # TODO unique
 
     def __str__(self):
-        return "Nota" + self.quiz.title
+        return self.questionnaire + " " + "Nota " + self.quiz.title + " " + self.student

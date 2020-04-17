@@ -6,11 +6,6 @@
 {% endblock  %}
 
 {% block content %}
-  {% if user.student and object.is_active %}
-    <a class="btn btn-primary float-right" href="{% url 'quiz_student_list' object.pk %}">
-      Responder
-    </a>
-  {% endif %}
 
   <h1>{{object.title}}</h1>
 
