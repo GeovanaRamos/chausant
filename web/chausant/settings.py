@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,12 +21,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'f!2)y#d4sul(cgn2p+x9i4kvm6h8$!8!t*yc^0dsmriyobg@2m' #TODO
+SECRET_KEY = os.environ.get('SECRET_KEY', 'f!2)y#d4sul(cgn2p+x9i4kvm6h8$!8!t*yc^0dsmriyobg@2m')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True #TODO
+DEBUG = os.environ.get('DEBUG', False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://chausant.herokuapp.com/']
 
 
 # Application definition
@@ -137,3 +138,7 @@ AUTH_USER_MODEL = "questionnaire.User"
 CRISPY_TEMPLATE_PACK="bootstrap3"
 
 AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.AllowAllUsersModelBackend']
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+django_heroku.settings(locals())
