@@ -16,12 +16,18 @@
   {% endif %}
 
   <div class="card mr-2 ml-2 mb-4" style="min-width: 300px; max-width: 300px;">
-    <div class="card-body text-center mt-4">
+    <div class="card-body text-center">
+
+      <p>
+        {{ school_class.school }}
+      </p>
+
       <h4 class="card-title">{{ school_class.school_level }}/{{school_class.year }} </h4>
 
       <p class="card-text">
         {{ school_class.discipline }}
       </p>
+
       <ul class="list-inline">
         <li class="list-inline-item">
           {% if user.teacher %}
