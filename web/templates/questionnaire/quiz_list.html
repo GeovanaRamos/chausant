@@ -37,9 +37,11 @@
               {% endfor %}
             </div>
             <div class="col">
+              {% if not quiz.is_in_questionnaire %}
               <a href="#" class="delete" title="Deletar Questão" data-href="{% url 'quiz_delete' quiz.pk %}">
                 <i class="fas fa-trash-alt mr-3 mt-3 float-right"></i>
               </a>
+              {% endif%}
             </div>
 
           </div>
