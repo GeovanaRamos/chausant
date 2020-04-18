@@ -9,7 +9,7 @@ from .models import Questionnaire, Quiz, Alternative, SchoolClass
 from .models import User, QuizResult, Student, QuestionnaireConclusion
 from .forms import QuestionnaireForm, QuizInlineFormSet, CustomUserCreationForm, SchoolClassForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .decorators import student_required, teacher_required
+from .decorators import student_required, teacher_required, questionnaire_not_concluded
 from django.utils.decorators import method_decorator
 
 
@@ -107,6 +107,7 @@ class QuizList(LoginRequiredMixin, ListView):
 
 
 @method_decorator([student_required], name='dispatch')
+@method_decorator([questionnaire_not_concluded], name='dispatch')
 class QuizStudentList(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('sign_in')
     model = Quiz
