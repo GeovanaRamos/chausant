@@ -28,9 +28,9 @@
         {{ school_class.discipline }}
       </p>
 
+      {% if user.teacher %}
       <ul class="list-inline">
         <li class="list-inline-item">
-          {% if user.teacher %}
             <small id="hidden-text">
               <p>
                 <strong>Código: </strong>{{school_class.pk}}<br>
@@ -43,9 +43,10 @@
             <a href="#" class="delete" title="Deletar Turma" data-href="{% url 'schoolclass_delete' school_class.pk %}">
               <i class="fas fa-trash-alt fa-lg ml-2"></i>
             </a>
-          {% endif %}
         </li>
       </ul>
+      {% endif %}
+
     </div>
   </div>
   {% if  forloop.counter|divisibleby:3 %}
