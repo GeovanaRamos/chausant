@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
+from .forms import UserCreationForm
 from .models import (Quiz, Alternative, Questionnaire, User,
                      Teacher, Student, QuizResult, SchoolClass,
                      Discipline, School)
@@ -23,6 +24,12 @@ class UserAdmin(DjangoUserAdmin):
         ('Personal info', {'fields': ('full_name', 'email', 'password')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('full_name', 'email', 'password', 'password2')}
+         ),
     )
     ordering = ('email',)
     search_fields = ('email',)
