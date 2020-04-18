@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from .forms import UserCreationForm
 from .models import (Quiz, Alternative, Questionnaire, User,
                      Teacher, Student, QuizResult, SchoolClass,
-                     Discipline, School)
+                     Discipline, School, SchoolLevel)
 
 admin.site.register(Questionnaire)
 admin.site.register(Quiz)
@@ -14,6 +14,7 @@ admin.site.register(QuizResult)
 admin.site.register(SchoolClass)
 admin.site.register(School)
 admin.site.register(Discipline)
+admin.site.register(SchoolLevel)
 
 
 @admin.register(User)
