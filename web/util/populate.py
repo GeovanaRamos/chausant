@@ -11,15 +11,15 @@ def create_password():
     return '123abc'
 
 
-def create_super_user(username, email):
+def create_super_user(name, email):
 
     password = create_password()
     try:
-        u = User.objects.create_superuser(username,
-                                          email,
+        u = User.objects.create_superuser(email,
                                           password,
                                           request_type=0,
-                                          is_active=True)
+                                          is_active=True,
+                                          full_name=name)
 
         return u
 
@@ -27,7 +27,7 @@ def create_super_user(username, email):
         raise ValidationError("An error occurred. Stopping the script")
 
 
-def create_user(name, username, email):
+def create_user(name, email):
     """
     Creates the user and ensures that if any error occurs the
     script does not continue
@@ -37,7 +37,6 @@ def create_user(name, username, email):
     try:
         u = User.objects.create_user(
             full_name=name,
-            username=username,
             email=email,
             password=password,
             request_type=1,
@@ -97,7 +96,7 @@ def populate():
     print ('Creating Students ...')
     print ('------------------------\n')
 
-    user_2 = create_user('Aninha', 'aninha' ,'aninha@email.com')
+    user_2 = create_user('Aninha', 'aninha@email.com')
 
     student_1 = user_2.student
     student_1.school_classes.add(school_class_1)
