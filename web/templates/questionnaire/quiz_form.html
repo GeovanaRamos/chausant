@@ -3,13 +3,17 @@
 
 {% block content %}
 <div class="container form-container">
-  <h2>Nova Questão</h2>
+  <h2 class="mb-2" >Nova Questão</h2>
 
   <form class="form-group" method="POST">
     {% csrf_token %}
    
     {{ form|crispy }}
-    <h3>Alternativas</h3>
+    <div class="my-4">
+      <h3 class="mb-0">Alternativas</h3>
+      <small>Selecione apenas uma correta!</small>
+    </div>
+
     {{ inlines.management_form }}
     {{ inlines.non_form_errors }}
     {% with inlines as formset %}

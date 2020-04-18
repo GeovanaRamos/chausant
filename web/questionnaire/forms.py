@@ -24,6 +24,10 @@ class SchoolClassForm(forms.ModelForm):
         model = SchoolClass
         fields = ('school_level', 'school', 'year', 'discipline', 'password')
 
+    def __init__(self, *args, **kwargs):
+        super(SchoolClassForm, self).__init__(*args, **kwargs)
+        self.fields['password'].label = "Senha"
+
 
 class QuestionnaireForm(forms.ModelForm):
     class Meta:
