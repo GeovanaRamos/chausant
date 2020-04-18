@@ -95,11 +95,11 @@ class SchoolLevel(models.Model):
 
 
 class SchoolClass(models.Model):
-    school_level = models.ForeignKey(verbose_name="Nível Escolar", to=SchoolLevel, on_delete=models.CASCADE)
-    school = models.ForeignKey(School, verbose_name="Escola", on_delete=models.CASCADE)
+    school_level = models.ForeignKey(verbose_name="Nível Escolar", to=SchoolLevel, on_delete=models.PROTECT)
+    school = models.ForeignKey(School, verbose_name="Escola", on_delete=models.PROTECT)
     year = models.IntegerField(verbose_name="Ano de Realização")
-    teacher = models.ForeignKey(verbose_name="Professor", to=Teacher, on_delete=models.CASCADE)
-    discipline = models.ForeignKey(verbose_name="Disciplina", to=Discipline, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(verbose_name="Professor", to=Teacher, on_delete=models.PROTECT)
+    discipline = models.ForeignKey(verbose_name="Disciplina", to=Discipline, on_delete=models.PROTECT)
     password = models.CharField(max_length=50)
 
     class Meta:
@@ -137,6 +137,11 @@ class Quiz(models.Model):
 
     def __str__(self):
         return self.title
+
+    def is_in_questionnaire(self):
+        if Questionnaire.objects.filter(quizzes__pk=self.pk).exists():
+            return True
+        return False
 
 
 class Questionnaire(models.Model):
