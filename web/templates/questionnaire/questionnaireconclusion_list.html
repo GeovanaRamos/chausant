@@ -5,6 +5,10 @@
 
 <h1 class="mb-5">Resultados</h1>
 
+<div class="container my-5">
+  <p><strong>Questionário:</strong> {{ questionnaire_title}}</p>
+</div>
+
 <table class="table">
 
   <thead>
@@ -23,7 +27,7 @@
       <td>{{ conclusion.student.user.full_name }}</td>
       <td>{{ conclusion.student.user.email }}</td>
       <td>{{ conclusion.concluded_at }}</td>
-      <td>{{ conclusion.get_hit_percentage }}</td>
+      <td>{{ conclusion.get_hit_percentage|floatformat }}%</td>
       <td class="text-center">
         <a title="Detalhes" href="{% url 'quizresult_list' conclusion.questionnaire.pk conclusion.student.pk %}">
           <i class="fas fa-info-circle"></i>

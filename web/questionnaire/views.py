@@ -247,6 +247,14 @@ class QuestionnaireConclusionList(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('sign_in')
     model = QuestionnaireConclusion
 
+    def get_context_data(self, **kwargs):
+        data = super(QuestionnaireConclusionList, self).get_context_data(**kwargs)
+
+        questionnaire_pk = self.kwargs.get('questionnaire_pk')
+        data['questionnaire_title'] = Questionnaire.objects.get(pk=questionnaire_pk).title
+
+        return data
+
     def get_queryset(self):
         return QuestionnaireConclusion.objects.filter(questionnaire=self.kwargs.get('questionnaire_pk'))
 
@@ -254,6 +262,19 @@ class QuestionnaireConclusionList(LoginRequiredMixin, ListView):
 class QuizResultList(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('sign_in')
     model = QuizResult
+
+    def get_context_data(self, **kwargs):
+        data = super(QuizResultList, self).get_context_data(**kwargs)
+
+        questionnaire_pk = self.kwargs.get('questionnaire_pk')
+        student_pk = self.kwargs.get('student_pk')
+        conclusion = QuestionnaireConclusion.objects.get(questionnaire=questionnaire_pk, student=student_pk)
+
+        data['hit_percentage'] = conclusion.get_hit_percentage()
+        data['questionnaire_title'] = Questionnaire.objects.get(pk=questionnaire_pk).title
+        data['student_name'] = Student.objects.get(pk=student_pk).user.full_name
+
+        return data
 
     def get_queryset(self):
         questionnaire = Questionnaire.objects.get(pk=self.kwargs.get('questionnaire_pk'))

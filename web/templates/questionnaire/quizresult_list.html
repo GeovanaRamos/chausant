@@ -5,6 +5,11 @@
 
 <h1 class="mb-5">Resultado Individual</h1>
 
+<div class="container my-5">
+  <p><strong>Questionário:</strong> {{ questionnaire_title}}</p>
+  <p><strong>Nome do Aluno:</strong> {{ student_name }}</p>
+</div>
+
 <table class="table">
 
   <thead>
@@ -25,6 +30,10 @@
       {% endif %}
     </tr>
     {% endfor %}
+    <tr>
+      <td><strong>Percentual de Acerto</strong></td>
+      <td><strong>{{hit_percentage|floatformat}}%</strong></td>
+    </tr>
   </tbody>
 
 </table>
